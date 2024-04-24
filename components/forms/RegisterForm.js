@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { registerUser } from '../utils/auth'; // Update with path to registerUser
+import { registerUser } from '../../utils/auth'; // Update with path to registerUser
 
 function RegisterForm({ user, updateUser }) {
   const [formData, setFormData] = useState({
