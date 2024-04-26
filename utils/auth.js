@@ -24,7 +24,7 @@ const checkUser = (uid) => new Promise((resolve, reject) => {
 });
 
 const registerUser = (userInfo) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/register`, {
+  fetch(`${clientCredentials.databaseURL}/users/register`, {
     method: 'POST',
     body: JSON.stringify(userInfo),
     headers: {
