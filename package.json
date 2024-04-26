@@ -2,7 +2,7 @@
   "name": "24-26-movies",
   "private": true,
   "version": "1.0.0",
-  "author": "Alex Berka / Fletcher Moore",
+  "author": "Alex Berka / Fletcher Moore / Shari Ebach",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
