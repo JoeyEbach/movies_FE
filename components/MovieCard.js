@@ -2,6 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { PropTypes } from 'prop-types';
+import Link from 'next/link';
 
 export default function MovieCard({ movieObj }) {
   return (
@@ -11,7 +12,9 @@ export default function MovieCard({ movieObj }) {
         <Card.Title>{movieObj.title}</Card.Title>
         <p className="card-text bold">{movieObj.dateReleased}</p>
         <p className="card-text bold">{movieObj.genre}</p>
-        <Button variant="primary">VIEW</Button>
+        <Link href={`/movie/${movieObj.id}`} passHref>
+          <Button variant="primary">VIEW</Button>
+        </Link>
         <Button variant="info">WISHLIST</Button>
       </Card.Body>
     </Card>
@@ -20,6 +23,7 @@ export default function MovieCard({ movieObj }) {
 
 MovieCard.propTypes = {
   movieObj: PropTypes.shape({
+    id: PropTypes.number,
     title: PropTypes.string,
     image: PropTypes.string,
     dateReleased: PropTypes.string,
