@@ -4,30 +4,32 @@ import PropTypes from 'prop-types';
 import { Image } from 'react-bootstrap';
 
 const initialReview = {
-  rating: 5,
-  review: 'It was good.',
-  dateCreated: Date(),
-  user: {
-    name: 'User',
-    image: '',
-  },
+  rating: 3,
+  commentReview: 'It was good.',
+  dateCreated: '2024-04-25 19:26:56.190649',
+  authorName: 'User',
+  authorImage: 'https://s3-eu-west-1.amazonaws.com/blog-ecotree/blog/0001/01/ad46dbb447cd0e9a6aeecd64cc2bd332b0cbcb79.jpeg',
 };
-export default function ReviewCard({ reviewObj }) {
+export default function ReviewCard({
+  reviewObj, isCurrentUser, editReview, deleteReview,
+}) {
   return (
     <div className="reviewCard">
-      <div className="reviewUser">
-        <Image src={reviewObj.user.image} alt="User profile" />
-        <p>{reviewObj.user.name}</p>
-      </div>
-      <div className="reviewText">
-        {reviewObj.rating > 0
-          && (
-          <div>
-            {[...Array(reviewObj.rating)].map((e, i) => <p className="star" key={i}>★</p>)}
-          </div>
-          )}
-        <p>{reviewObj.review}</p>
-        <p>{reviewObj.dateCreated}</p>
+      <Image src={reviewObj.authorImage} className="userImageReview" alt="User profile" />
+      <div>
+        <div className="reviewHead">
+          <p className="reviewUser">{reviewObj.authorName}</p>
+          {reviewObj.rating > 0 && [...Array(reviewObj.rating)].map((e, i) => <p className="star" key={i}>★</p>)}
+          <p>{reviewObj.dateCreated.split(' ')[0]}</p>
+          {isCurrentUser
+            && (
+            <>
+              <button type="button" className="btn btn-danger" onClick={editReview}>Edit</button>
+              <button type="button" className="btn btn-success" onClick={deleteReview}>Delete</button>
+            </>
+            )}
+        </div>
+        <p>{reviewObj.commentReview}</p>
       </div>
     </div>
   );
@@ -35,16 +37,18 @@ export default function ReviewCard({ reviewObj }) {
 
 ReviewCard.propTypes = {
   reviewObj: PropTypes.shape({
-    review: PropTypes.string,
     rating: PropTypes.number,
+    commentReview: PropTypes.string,
     dateCreated: PropTypes.string,
-    user: PropTypes.shape({
-      name: PropTypes.string,
-      image: PropTypes.string,
-    }),
+    authorName: PropTypes.string,
+    authorImage: PropTypes.string,
   }),
+  isCurrentUser: PropTypes.bool,
+  editReview: PropTypes.func.isRequired,
+  deleteReview: PropTypes.func.isRequired,
 };
 
 ReviewCard.defaultProps = {
   reviewObj: initialReview,
+  isCurrentUser: true,
 };
