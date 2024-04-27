@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
-import { createReview } from '../../api/reviewData';
+// import { createReview } from '../../api/reviewData';
 
 const initialState = {
   rating: 0,
