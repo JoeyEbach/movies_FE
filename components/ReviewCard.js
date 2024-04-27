@@ -51,5 +51,5 @@ ReviewCard.propTypes = {
 
 ReviewCard.defaultProps = {
   reviewObj: initialReview,
-  isCurrentUser: false,
+  isCurrentUser: true,
 };

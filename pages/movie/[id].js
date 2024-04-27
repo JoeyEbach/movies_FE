@@ -5,11 +5,17 @@ import { Card } from 'react-bootstrap';
 import { getSingleMovie } from '../../api/movieData';
 import ReviewCard from '../../components/ReviewCard';
 import { deleteReview } from '../../api/reviewData';
+import { useAuth } from '../../utils/context/authContext';
+import { getSingleUser } from '../../api/userData';
+import ReviewForm from '../../components/forms/ReviewForm';
 
 export default function ViewMovie() {
   const router = useRouter();
   const { id } = router.query;
   const [movie, setMovie] = useState({});
+  const [reviewing, setReviewing] = useState(false);
+  const [currentUser, setCurrentUser] = useState('');
+  const { user } = useAuth();
 
   const getMovieDetails = () => {
     getSingleMovie(id)?.then(setMovie);
@@ -18,6 +24,10 @@ export default function ViewMovie() {
   useEffect(() => {
     getMovieDetails();
   }, [movie]);
+
+  useEffect(() => {
+    getSingleUser(user.id).then(setCurrentUser);
+  }, [user]);
 
   const handleEdit = (reviewId) => {
     router.push(`/reviews/edit/${reviewId}`);
@@ -30,6 +40,10 @@ export default function ViewMovie() {
         getMovieDetails();
       });
     }
+  };
+
+  const onUpdate = () => {
+    router.reload();
   };
 
   return (
@@ -50,11 +64,19 @@ export default function ViewMovie() {
           </Card>
         </div>
 
+        {!movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && !reviewing && (
+          <button type="button" onClick={() => setReviewing(true)}>Add A Review</button>
+        )}
+
+        {reviewing && (
+          <ReviewForm user={currentUser.id} onUpdate={onUpdate} />
+        )}
+
         {movie.reviews !== null && (
         <>
           <div className="d-flex flex-wrap item-container">
             {movie.reviews?.map((review) => (
-              <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} />
+              <ReviewCard key={review.id} reviewObj={review} isCurrentUser={currentUser === review.userId} editReview={handleEdit} deleteReview={handleDelete} />
             ))}
           </div>
         </>

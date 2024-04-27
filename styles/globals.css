@@ -48,3 +48,11 @@ body {
   object-fit: cover;
   margin: 5px;
 }
+
+.goldStar {
+  color: goldenrod;
+}
+
+.grayStar {
+  color: darkgray;
+}
