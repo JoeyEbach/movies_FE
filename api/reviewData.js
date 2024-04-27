@@ -83,7 +83,7 @@ const deleteReview = (reviewId) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.json())
+    // .then((response) => response.json())
     .then(resolve)
     .catch(reject);
 });
