@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Image } from 'react-bootstrap';
 import { getSingleMovie } from '../../api/movieData';
 import ReviewCard from '../../components/ReviewCard';
 import { deleteReview } from '../../api/reviewData';
@@ -9,6 +9,7 @@ import { deleteReview } from '../../api/reviewData';
 export default function ViewMovie() {
   const router = useRouter();
   const { id } = router.query;
+
   const [movie, setMovie] = useState({});
 
   const getMovieDetails = () => {
@@ -37,7 +38,7 @@ export default function ViewMovie() {
       <div className="">
         <div>
           <Card>
-            <Card.Img variant="top" src={movie.image} alt={movie.title} style={{ height: '400px' }} />
+            <Image src={movie.image} alt={movie.title} style={{ width: '75%', height: '400px' }} />
             <h4>{movie.dateReleased}</h4>
             {movie.genres?.map((genre) => (
               <div key={genre.id}>
@@ -52,7 +53,7 @@ export default function ViewMovie() {
 
         {movie.reviews !== null && (
         <>
-          <div className="d-flex flex-wrap item-container">
+          <div className="d-flex flex-wrap reviews-container" style={{ width: '100%' }}>
             {movie.reviews?.map((review) => (
               <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} />
             ))}

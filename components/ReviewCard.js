@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Image } from 'react-bootstrap';
+import { getSingleUser } from '../api/userData';
 
 const initialReview = {
   rating: 3,
@@ -11,8 +13,22 @@ const initialReview = {
   authorImage: 'https://s3-eu-west-1.amazonaws.com/blog-ecotree/blog/0001/01/ad46dbb447cd0e9a6aeecd64cc2bd332b0cbcb79.jpeg',
 };
 export default function ReviewCard({
-  reviewObj, isCurrentUser, editReview, deleteReview,
+  reviewObj, editReview, deleteReview,
 }) {
+  const [currentUser, setCurrentUser] = useState({});
+  const [isCurrentUser, setIsCurrentUser] = useState(false);
+
+  const checkIfUser = () => {
+    getSingleUser(reviewObj.userId).then(setCurrentUser);
+    if (currentUser.id === reviewObj.userId) {
+      setIsCurrentUser(true);
+    }
+  };
+
+  useEffect(() => {
+    checkIfUser();
+  }, []);
+
   return (
     <div className="reviewCard">
       <Image src={reviewObj.authorImage} className="userImageReview" alt="User profile" />
@@ -38,18 +54,17 @@ export default function ReviewCard({
 ReviewCard.propTypes = {
   reviewObj: PropTypes.shape({
     id: PropTypes.number,
+    userId: PropTypes.number,
     rating: PropTypes.number,
     commentReview: PropTypes.string,
     dateCreated: PropTypes.string,
     authorName: PropTypes.string,
     authorImage: PropTypes.string,
   }),
-  isCurrentUser: PropTypes.bool,
   editReview: PropTypes.func.isRequired,
   deleteReview: PropTypes.func.isRequired,
 };
 
 ReviewCard.defaultProps = {
   reviewObj: initialReview,
-  isCurrentUser: false,
 };
