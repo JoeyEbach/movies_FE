@@ -56,3 +56,10 @@ body {
 .grayStar {
   color: darkgray;
 }
+
+.profile-reviews-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+}
