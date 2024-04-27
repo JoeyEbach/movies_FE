@@ -1,28 +1,52 @@
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+// import { Image } from 'react-bootstrap';
 import { getSingleUser } from '../api/userData';
 import { useAuth } from '../utils/context/authContext';
-// import { getReviewsByUser } from '../api/reviewData';
+import { getReviewsByUser } from '../api/reviewData';
+import ReviewCard from '../components/ReviewCard';
 // import { Button } from 'react-bootstrap';
 
 export default function Profile() {
   const [singleUser, setSingleUser] = useState({});
+  const [myReviews, setMyReviews] = useState([]);
   const { user } = useAuth();
 
-  const getDetails = () => {
+  const getUserDetails = () => {
     getSingleUser(user.id).then(setSingleUser);
   };
 
+  const getMyReviews = () => {
+    const userId = user.id;
+    getReviewsByUser(userId).then(setMyReviews);
+  };
+
   useEffect(() => {
-    getDetails();
-  });
+    getUserDetails();
+    getMyReviews();
+  }, [user]);
 
   return (
-    <div>
-      <img src={singleUser.image} alt="profile" style={{ borderRadius: '50%', width: 250, height: 250 }} />
-      <h1>Hello {singleUser.name}! </h1>
-      <p>Email: {singleUser.email}</p>
-      <p>Click the button below to logout!</p>
-    </div>
+    <>
+      <div className="profile-header">
+        <img src={singleUser.image} alt="profile" style={{ borderRadius: '50%', width: 250, height: 250 }} />
+        <h1>Hello {singleUser.name}! </h1>
+        <p>Email: {singleUser.email}</p>
+      </div>
+      <div>
+        {myReviews.map((r) => (
+          <div className="profile-reviews-container">
+            <div>
+              <img src={r.movieImage} alt="movie poster" style={{ width: 80, height: 120 }} />
+            </div>
+            <div>
+              <h6>{r.movieName}</h6>
+              <ReviewCard key={r.id} reviewObj={r} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }

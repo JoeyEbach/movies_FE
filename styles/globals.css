@@ -48,3 +48,8 @@ body {
   object-fit: cover;
   margin: 5px;
 }
+
+.profile-reviews-container {
+  display: flex;
+  flex-direction: row;
+}
