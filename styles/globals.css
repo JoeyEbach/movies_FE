@@ -21,6 +21,16 @@ body {
   background-color: #88effd;
 }
 
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.recent-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .reviewCard {
   width: 90%;
   background: white;
