@@ -24,8 +24,8 @@ export default function ReviewCard({
           {isCurrentUser
             && (
             <>
-              <button type="button" className="btn btn-danger" onClick={editReview}>Edit</button>
-              <button type="button" className="btn btn-success" onClick={deleteReview}>Delete</button>
+              <button type="button" className="btn btn-danger" onClick={() => editReview(reviewObj.id)}>Edit</button>
+              <button type="button" className="btn btn-success" onClick={() => deleteReview(reviewObj.id)}>Delete</button>
             </>
             )}
         </div>
@@ -37,6 +37,7 @@ export default function ReviewCard({
 
 ReviewCard.propTypes = {
   reviewObj: PropTypes.shape({
+    id: PropTypes.number,
     rating: PropTypes.number,
     commentReview: PropTypes.string,
     dateCreated: PropTypes.string,
@@ -50,5 +51,5 @@ ReviewCard.propTypes = {
 
 ReviewCard.defaultProps = {
   reviewObj: initialReview,
-  isCurrentUser: true,
+  isCurrentUser: false,
 };
