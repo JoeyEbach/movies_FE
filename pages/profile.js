@@ -1,12 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-// import { Image } from 'react-bootstrap';
 import { getSingleUser } from '../api/userData';
 import { useAuth } from '../utils/context/authContext';
 import { getReviewsByUser } from '../api/reviewData';
 import ReviewCard from '../components/ReviewCard';
-// import { Button } from 'react-bootstrap';
 
 export default function Profile() {
   const [singleUser, setSingleUser] = useState({});
