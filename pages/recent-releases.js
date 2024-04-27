@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getRecentMovies } from '../api/movieData';
+import MovieCard from '../components/MovieCard';
 
 export default function RecentReleases() {
+  const [recentMovies, setRecentMovies] = useState([]);
+
+  const getAllDaRecentMovies = () => {
+    getRecentMovies().then(setRecentMovies);
+  };
+
+  useEffect(() => {
+    getAllDaRecentMovies();
+  }, []);
+
   return (
-    <div>
-      Display 20 Most Recent Films
+    <div className="recent-cards">
+      {recentMovies.map((rec) => (
+        <MovieCard key={rec.id} movieObj={rec} onUpdate={getAllDaRecentMovies} />
+      ))}
     </div>
   );
 }

@@ -5,7 +5,6 @@ import MovieCard from '../components/MovieCard';
 export default function AllMovies() {
   const [movies, setMovies] = useState([]);
 
-  // create a function that makes the API call to get all the authors
   const getAllTheMovies = () => {
     getAllMovies().then(setMovies);
   };
