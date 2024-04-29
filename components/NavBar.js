@@ -8,11 +8,12 @@ import {
   Button,
 } from 'react-bootstrap';
 import { signOut } from '../utils/auth';
+import SearchBar from './SearchBar';
 
 export default function NavBar() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Container>
+      <Container className="signout-container">
         <Link passHref href="/">
           <Navbar.Brand>C&apos;est La Movie</Navbar.Brand>
         </Link>
@@ -32,9 +33,15 @@ export default function NavBar() {
             <Link passHref href="/profile">
               <Nav.Link>Profile</Nav.Link>
             </Link>
-            <Button variant="danger" onClick={signOut}>
-              Sign Out
-            </Button>
+            <div style={{ marginLeft: '10px', paddingRight: '40px' }}>
+              <SearchBar />
+            </div>
+            <Nav>
+              <Button variant="outline-secondary" onClick={signOut} className="signOutButton">
+                Sign Out
+              </Button>
+            </Nav>
+
           </Nav>
         </Navbar.Collapse>
       </Container>

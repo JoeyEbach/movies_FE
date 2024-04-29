@@ -27,7 +27,7 @@ export default function Profile() {
 
   return (
     <>
-      <div>
+      <div className="profile-container">
         <img src={singleUser.image} alt="profile" style={{ borderRadius: '50%', width: 250, height: 250 }} />
         <h1>Hello {singleUser.name}! </h1>
         <p>Email: {singleUser.email}</p>
