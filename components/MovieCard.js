@@ -11,7 +11,9 @@ export default function MovieCard({ movieObj }) {
       <Card.Body>
         <Card.Title>{movieObj.title}</Card.Title>
         <p className="card-text bold">{movieObj.dateReleased}</p>
-        <p className="card-text bold">{movieObj.genre}</p>
+        {movieObj.genres?.map((genre) => (
+          <p key={genre.id} className="card-text bold">{genre.name}</p>
+        ))}
         <Link href={`/movie/${movieObj.id}`} passHref>
           <Button variant="primary">VIEW</Button>
         </Link>
@@ -27,6 +29,11 @@ MovieCard.propTypes = {
     title: PropTypes.string,
     image: PropTypes.string,
     dateReleased: PropTypes.string,
-    genre: PropTypes.string,
+    genres: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+      }),
+    ),
   }).isRequired,
 };
