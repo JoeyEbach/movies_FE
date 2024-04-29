@@ -19,7 +19,7 @@ export default function ReviewCard({
       <div>
         <div className="reviewHead">
           <p className="reviewUser">{reviewObj.authorName}</p>
-          {reviewObj.rating > 0 && [...Array(reviewObj.rating)].map((e, i) => <p className="star" key={i}>★</p>)}
+          {reviewObj.rating > 0 && [...Array(reviewObj.rating)].map((e, i) => <p className="star goldstar" key={i}>★</p>)}
           <p>{reviewObj.dateCreated.split(' ')[0]}</p>
           {isCurrentUser
             && (

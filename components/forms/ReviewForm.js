@@ -1,8 +1,9 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
-// import { createReview } from '../../api/reviewData';
+import { useRouter } from 'next/router';
+import { createReview } from '../../api/reviewData';
 
 const initialState = {
   rating: 0,
@@ -13,47 +14,63 @@ const initialState = {
 };
 export default function ReviewForm({ reviewObj, user, onUpdate }) {
   const [formData, setFormData] = useState(initialState);
+  const [starColor, setStarColor] = useState([...Array(5).fill('goldstar')]);
+  const router = useRouter();
 
-  const toggleRating = (i) => {
-    if (i === formData.rating) {
-      setFormData({
-        ...formData,
+  const toggleRating = (stars) => {
+    console.warn(stars, formData.rating, starColor);
+    if (stars === formData.rating) {
+      setFormData((prevState) => ({
+        ...prevState,
         rating: 0,
-      });
+      }));
     } else {
-      setFormData({
-        ...formData,
-        rating: i,
-      });
+      setFormData((prevState) => ({
+        ...prevState,
+        rating: stars,
+      }));
     }
-    console.warn(formData);
   };
+
+  useEffect(() => {
+    const newColors = [...Array(5).fill('goldstar').fill('graystar', formData.rating)];
+    setStarColor([...newColors]);
+  }, [formData.rating]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (reviewObj.id) {
-      console.warn(reviewObj, onUpdate);
-    } else {
-      console.warn({ ...formData, userId: user, dateCreated: Date() });
+    if (formData.rating > 0 || formData.commentReview !== '') {
+      if (reviewObj.id) {
+        console.warn(reviewObj, onUpdate);
+      } else {
+        console.warn(formData, new Date());
+        createReview({
+          ...formData, userId: user, movieId: Number(router.query.id), dateCreated: new Date(),
+        });
+        // console.warn(router.query.id, user);
+        // console.warn({
+        //   ...formData, userId: user, movieId: Number(router.query.id), dateCreated: Date(),
+        // });
+      }
     }
   };
 
   return (
     <div className="addEditReview">
       <div className="formStars">
-        {[...Array(5)].map((e, i) => (
-          <button type="button" className={i + 1 <= reviewObj.rating ? 'goldStar' : 'grayStar'} key={i} onClick={() => toggleRating(i)}>★</button>
+        {starColor.map((e, i) => (
+          <button type="button" className={`star ${e}`} key={i} onClick={() => toggleRating(i + 1)}>★</button>
         ))}
       </div>
       <Form className="forms" onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="comment">
           <Form.Control
-            type="textarea"
+            as="textarea"
             name="commentReview"
             value={formData.commentReview}
-            placeholder="Type review..."
+            placeholder="Add comments..."
             onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))}
-            required
+            rows={3}
           />
         </Form.Group>
         <Button variant="primary" type="submit">
