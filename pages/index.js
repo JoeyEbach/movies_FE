@@ -7,7 +7,7 @@ import MovieCard from '../components/MovieCard';
 import { getTopMovies } from '../api/movieData';
 
 function Home() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(undefined);
   const [topMovies, setTopMovies] = useState([]);
   const { user } = useAuth();
   const router = useRouter();
@@ -28,6 +28,10 @@ function Home() {
     router.reload();
     getSingleUser(user.id).then(setCurrentUser);
   };
+
+  if (currentUser === undefined) {
+    return null; // Render nothing while user data is being fetched
+  }
 
   return (
     <>

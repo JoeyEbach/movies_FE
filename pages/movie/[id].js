@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Image } from 'react-bootstrap';
 import { getSingleMovie } from '../../api/movieData';
 import ReviewCard from '../../components/ReviewCard';
 import { deleteReview } from '../../api/reviewData';
@@ -12,6 +12,7 @@ import ReviewForm from '../../components/forms/ReviewForm';
 export default function ViewMovie() {
   const router = useRouter();
   const { id } = router.query;
+
   const [movie, setMovie] = useState({});
   const [reviewing, setReviewing] = useState(false);
   const [currentUser, setCurrentUser] = useState('');
@@ -48,10 +49,12 @@ export default function ViewMovie() {
 
   return (
     <>
-      <div className="">
+      <div className="card-container">
         <div>
           <Card>
-            <Card.Img variant="top" src={movie.image} alt={movie.title} style={{ height: '400px' }} />
+            <div className="image-container">
+              <Image src={movie.image} alt={movie.title} className="center-image" />
+            </div>
             <h4>{movie.dateReleased}</h4>
             {movie.genres?.map((genre) => (
               <div key={genre.id}>
@@ -74,7 +77,7 @@ export default function ViewMovie() {
 
         {movie.reviews !== null && (
         <>
-          <div className="d-flex flex-wrap item-container">
+          <div className="d-flex flex-wrap reviewCard-container" style={{ width: '100%' }}>
             {movie.reviews?.map((review) => (
               <ReviewCard key={review.id} reviewObj={review} isCurrentUser={currentUser === review.userId} editReview={handleEdit} deleteReview={handleDelete} />
             ))}
