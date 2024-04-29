@@ -31,10 +31,10 @@ export default function ReviewCard({
 
   return (
     <div className="reviewCard">
-      <Image src={reviewObj.authorImage} className="userImageReview" alt="User profile" />
+      <Image src={currentUser.image} className="userImageReview" alt="User profile" />
       <div>
         <div className="reviewHead">
-          <p className="reviewUser">{reviewObj.authorName}</p>
+          <p className="reviewUser">{currentUser.name}</p>
           {reviewObj.rating > 0 && [...Array(reviewObj.rating)].map((e, i) => <p className="star" key={i}>★</p>)}
           <p>{reviewObj.dateCreated.split(' ')[0]}</p>
           {isCurrentUser

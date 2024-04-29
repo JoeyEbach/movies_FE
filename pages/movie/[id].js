@@ -35,10 +35,12 @@ export default function ViewMovie() {
 
   return (
     <>
-      <div className="">
+      <div className="card-container">
         <div>
           <Card>
-            <Image src={movie.image} alt={movie.title} style={{ width: '75%', height: '400px' }} />
+            <div className="image-container">
+              <Image src={movie.image} alt={movie.title} className="center-image" />
+            </div>
             <h4>{movie.dateReleased}</h4>
             {movie.genres?.map((genre) => (
               <div key={genre.id}>
@@ -53,7 +55,7 @@ export default function ViewMovie() {
 
         {movie.reviews !== null && (
         <>
-          <div className="d-flex flex-wrap reviews-container" style={{ width: '100%' }}>
+          <div className="d-flex flex-wrap reviewCard-container" style={{ width: '100%' }}>
             {movie.reviews?.map((review) => (
               <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} />
             ))}

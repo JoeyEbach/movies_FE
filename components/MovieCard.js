@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function MovieCard({ movieObj }) {
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card className="card-style">
       <Card.Img variant="top" src={movieObj.image} alt={movieObj.title} style={{ height: '400px' }} />
       <Card.Body>
         <Card.Title>{movieObj.title}</Card.Title>
