@@ -30,8 +30,8 @@ export default function ViewMovie() {
     getSingleUser(user.id).then(setCurrentUser);
   }, [user]);
 
-  const handleEdit = (reviewId) => {
-    router.push(`/reviews/edit/${reviewId}`);
+  const handleEdit = () => {
+    setReviewing(true);
   };
 
   const handleDelete = (reviewId) => {
@@ -44,7 +44,7 @@ export default function ViewMovie() {
   };
 
   const onUpdate = () => {
-    router.reload();
+    setReviewing(false);
   };
 
   return (
@@ -67,19 +67,29 @@ export default function ViewMovie() {
           </Card>
         </div>
 
-        {!movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && !reviewing && (
+        {!movie.reviews?.filter((rev) => rev.userId === currentUser.id).length
+          ? !reviewing && (
           <button type="button" onClick={() => setReviewing(true)}>Add A Review</button>
-        )}
+          ) : reviewing && (
+            <ReviewForm user={currentUser.id} onUpdate={onUpdate} />
+          )}
 
-        {reviewing && (
-          <ReviewForm user={currentUser.id} onUpdate={onUpdate} />
-        )}
+        {reviewing && movie.reviews.filter((rev) => rev.userId === currentUser.id).map((review) => (
+          <ReviewForm key={review.id} reviewObj={review} user={currentUser.id} onUpdate={onUpdate} />
+        ))}
+
+        {reviewing && movie.reviews.filter((rev) => rev.userId === currentUser.id).map((review) => (
+          <ReviewForm key={review.id} reviewObj={review} user={currentUser.id} onUpdate={onUpdate} />
+        ))}
 
         {movie.reviews !== null && (
         <>
           <div className="d-flex flex-wrap reviewCard-container" style={{ width: '100%' }}>
-            {movie.reviews?.map((review) => (
-              <ReviewCard key={review.id} reviewObj={review} isCurrentUser={currentUser === review.userId} editReview={handleEdit} deleteReview={handleDelete} />
+            {!reviewing && movie.reviews?.filter((review) => review.userId === currentUser.id).map((review) => (
+              <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} />
+            ))}
+            {movie.reviews?.filter((review) => review.userId !== currentUser.id).map((review) => (
+              <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} />
             ))}
           </div>
         </>

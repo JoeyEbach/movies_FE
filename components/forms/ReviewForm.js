@@ -43,14 +43,9 @@ export default function ReviewForm({ reviewObj, user, onUpdate }) {
       if (reviewObj.id) {
         console.warn(reviewObj, onUpdate);
       } else {
-        console.warn(formData, new Date());
         createReview({
           ...formData, userId: user, movieId: Number(router.query.id), dateCreated: new Date(),
         });
-        // console.warn(router.query.id, user);
-        // console.warn({
-        //   ...formData, userId: user, movieId: Number(router.query.id), dateCreated: Date(),
-        // });
       }
     }
   };
