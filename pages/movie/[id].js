@@ -12,11 +12,11 @@ import ReviewForm from '../../components/forms/ReviewForm';
 export default function ViewMovie() {
   const router = useRouter();
   const { id } = router.query;
+  const { user } = useAuth();
 
   const [movie, setMovie] = useState({});
   const [reviewing, setReviewing] = useState(false);
   const [currentUser, setCurrentUser] = useState('');
-  const { user } = useAuth();
 
   const getMovieDetails = () => {
     getSingleMovie(id)?.then(setMovie);
