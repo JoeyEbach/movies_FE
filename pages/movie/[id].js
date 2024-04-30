@@ -5,12 +5,18 @@ import { Card, Image } from 'react-bootstrap';
 import { getSingleMovie } from '../../api/movieData';
 import ReviewCard from '../../components/ReviewCard';
 import { deleteReview } from '../../api/reviewData';
+import { useAuth } from '../../utils/context/authContext';
+import { getSingleUser } from '../../api/userData';
+import ReviewForm from '../../components/forms/ReviewForm';
 
 export default function ViewMovie() {
   const router = useRouter();
   const { id } = router.query;
+  const { user } = useAuth();
 
   const [movie, setMovie] = useState({});
+  const [reviewing, setReviewing] = useState(false);
+  const [currentUser, setCurrentUser] = useState('');
 
   const getMovieDetails = () => {
     getSingleMovie(id)?.then(setMovie);
@@ -20,8 +26,12 @@ export default function ViewMovie() {
     getMovieDetails();
   }, [movie]);
 
-  const handleEdit = (reviewId) => {
-    router.push(`/reviews/edit/${reviewId}`);
+  useEffect(() => {
+    getSingleUser(user.id).then(setCurrentUser);
+  }, [user]);
+
+  const handleEdit = () => {
+    setReviewing(true);
   };
 
   const handleDelete = (reviewId) => {
@@ -31,6 +41,10 @@ export default function ViewMovie() {
         getMovieDetails();
       });
     }
+  };
+
+  const onUpdate = () => {
+    setReviewing(false);
   };
 
   return (
@@ -53,10 +67,25 @@ export default function ViewMovie() {
           </Card>
         </div>
 
+        {!reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
+          <button type="button" onClick={() => setReviewing(true)}>Add A Review</button>
+        )}
+
+        {reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
+          <ReviewForm user={currentUser.id} onUpdate={onUpdate} />
+        )}
+
+        {reviewing && movie.reviews.filter((rev) => rev.userId === currentUser.id).map((review) => (
+          <ReviewForm key={review.id} reviewObj={review} user={currentUser.id} onUpdate={onUpdate} />
+        ))}
+
         {movie.reviews !== null && (
         <>
           <div className="d-flex flex-wrap reviewCard-container" style={{ width: '100%' }}>
-            {movie.reviews?.map((review) => (
+            {!reviewing && movie.reviews?.filter((review) => review.userId === currentUser.id).map((review) => (
+              <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} userId={currentUser.id} />
+            ))}
+            {movie.reviews?.filter((review) => review.userId !== currentUser.id).map((review) => (
               <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} />
             ))}
           </div>
