@@ -7,10 +7,9 @@ import Link from 'next/link';
 export default function MovieCard({ movieObj }) {
   return (
     <Card className="card-style">
-      <Card.Img variant="top" src={movieObj.image} alt={movieObj.title} style={{ height: '400px' }} />
+      <Card.Img variant="top" src={movieObj.image} alt={movieObj.title} style={{ height: '350px' }} />
       <Card.Body>
-        <Card.Title>{movieObj.title}</Card.Title>
-        <p>{movieObj.dateReleased}</p>
+        <title>{movieObj.title}</title>
         <div className="card-genres">
           {movieObj.genres?.map((genre) => (
             <p key={genre.id} className="card-individual-genre">{genre.name}</p>
@@ -30,7 +29,6 @@ MovieCard.propTypes = {
     id: PropTypes.number,
     title: PropTypes.string,
     image: PropTypes.string,
-    dateReleased: PropTypes.string,
     genres: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number,
