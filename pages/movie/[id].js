@@ -5,10 +5,12 @@ import { Card, Image } from 'react-bootstrap';
 import { getSingleMovie } from '../../api/movieData';
 import ReviewCard from '../../components/ReviewCard';
 import { deleteReview } from '../../api/reviewData';
+import { useAuth } from '../../utils/context/authContext';
 
 export default function ViewMovie() {
   const router = useRouter();
   const { id } = router.query;
+  const { user } = useAuth();
 
   const [movie, setMovie] = useState({});
 
@@ -57,7 +59,7 @@ export default function ViewMovie() {
         <>
           <div className="d-flex flex-wrap reviewCard-container" style={{ width: '100%' }}>
             {movie.reviews?.map((review) => (
-              <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} />
+              <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} userId={user.id} />
             ))}
           </div>
         </>
