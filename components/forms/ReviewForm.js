@@ -3,22 +3,18 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import { createReview } from '../../api/reviewData';
+import { createReview, updateReview } from '../../api/reviewData';
 
 const initialState = {
   rating: 0,
-  userId: 1,
-  movieId: 1,
   commentReview: '',
-  dateCreated: '',
 };
 export default function ReviewForm({ reviewObj, user, onUpdate }) {
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState(reviewObj || initialState);
   const [starColor, setStarColor] = useState([...Array(5).fill('goldstar')]);
   const router = useRouter();
 
   const toggleRating = (stars) => {
-    console.warn(stars, formData.rating, starColor);
     if (stars === formData.rating) {
       setFormData((prevState) => ({
         ...prevState,
@@ -41,11 +37,12 @@ export default function ReviewForm({ reviewObj, user, onUpdate }) {
     e.preventDefault();
     if (formData.rating > 0 || formData.commentReview !== '') {
       if (reviewObj.id) {
-        console.warn(reviewObj, onUpdate);
+        // console.warn({ ...formData, dateCreated: new Date(formData.dateCreated) });
+        updateReview({ ...formData, dateCreated: new Date(formData.dateCreated) }).then(onUpdate);
       } else {
         createReview({
           ...formData, userId: user, movieId: Number(router.query.id), dateCreated: new Date(),
-        });
+        }).then(onUpdate);
       }
     }
   };

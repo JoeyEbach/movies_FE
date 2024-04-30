@@ -67,16 +67,13 @@ export default function ViewMovie() {
           </Card>
         </div>
 
-        {!movie.reviews?.filter((rev) => rev.userId === currentUser.id).length
-          ? !reviewing && (
+        {!reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
           <button type="button" onClick={() => setReviewing(true)}>Add A Review</button>
-          ) : reviewing && (
-            <ReviewForm user={currentUser.id} onUpdate={onUpdate} />
-          )}
+        )}
 
-        {reviewing && movie.reviews.filter((rev) => rev.userId === currentUser.id).map((review) => (
-          <ReviewForm key={review.id} reviewObj={review} user={currentUser.id} onUpdate={onUpdate} />
-        ))}
+        {reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
+          <ReviewForm user={currentUser.id} onUpdate={onUpdate} />
+        )}
 
         {reviewing && movie.reviews.filter((rev) => rev.userId === currentUser.id).map((review) => (
           <ReviewForm key={review.id} reviewObj={review} user={currentUser.id} onUpdate={onUpdate} />
@@ -86,7 +83,7 @@ export default function ViewMovie() {
         <>
           <div className="d-flex flex-wrap reviewCard-container" style={{ width: '100%' }}>
             {!reviewing && movie.reviews?.filter((review) => review.userId === currentUser.id).map((review) => (
-              <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} />
+              <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} userId={currentUser.id} />
             ))}
             {movie.reviews?.filter((review) => review.userId !== currentUser.id).map((review) => (
               <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} />
