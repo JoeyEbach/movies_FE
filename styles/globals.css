@@ -24,18 +24,25 @@ body {
 /* page containers */
 
 .general-cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 5%;
 }
 
+/* 
+@media (max-width: 400px) {
+  .general-cards-container {
+    display: block;
+  }
+}
+*/
 
 /*movie cards and containers*/
 .card-style {
   background-color: #282828;
   border-color: #404040;
-  border-width: 3px;
-  width: 18rem;
+  border-width: 1px;
   text-align: center;
   color: #ffffff;
 }
@@ -65,6 +72,21 @@ body {
   width: 100%;
   max-width: 100%; 
   height: auto; 
+}
+
+.card-genres {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 2px;
+}
+
+.card-individual-genre {
+  border-style: solid;
+  border-color: #10e5b2;
+  border-width: 1px;
+  border-radius: 50%;
+  color: #10e5b2;
 }
 
 /*Review cards and containers*/

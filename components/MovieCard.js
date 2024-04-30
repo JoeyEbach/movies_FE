@@ -10,10 +10,12 @@ export default function MovieCard({ movieObj }) {
       <Card.Img variant="top" src={movieObj.image} alt={movieObj.title} style={{ height: '400px' }} />
       <Card.Body>
         <Card.Title>{movieObj.title}</Card.Title>
-        <p className="card-text bold">{movieObj.dateReleased}</p>
-        {movieObj.genres?.map((genre) => (
-          <p key={genre.id} className="card-text bold">{genre.name}</p>
-        ))}
+        <p>{movieObj.dateReleased}</p>
+        <div className="card-genres">
+          {movieObj.genres?.map((genre) => (
+            <p key={genre.id} className="card-individual-genre">{genre.name}</p>
+          ))}
+        </div>
         <Link href={`/movie/${movieObj.id}`} passHref>
           <Button variant="primary">VIEW</Button>
         </Link>
