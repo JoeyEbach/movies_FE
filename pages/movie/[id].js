@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Card, Image } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 import { getSingleMovie } from '../../api/movieData';
 import ReviewCard from '../../components/ReviewCard';
 import { deleteReview } from '../../api/reviewData';
@@ -37,20 +37,18 @@ export default function ViewMovie() {
     <>
       <div className="card-container">
         <div>
-          <Card>
-            <div className="image-container">
-              <Image src={movie.image} alt={movie.title} className="center-image" />
+          <div className="image-container">
+            <Image src={movie.image} alt={movie.title} className="center-image" />
+          </div>
+          <h4>{movie.dateReleased}</h4>
+          {movie.genres?.map((genre) => (
+            <div key={genre.id}>
+              <h4>{movie.name}</h4>
             </div>
-            <h4>{movie.dateReleased}</h4>
-            {movie.genres?.map((genre) => (
-              <div key={genre.id}>
-                <h4>{movie.name}</h4>
-              </div>
-            ))}
-            <h4>{movie.description}</h4>
-            <h2>{movie.title}</h2>
-            <h2>{movie.rating}</h2>
-          </Card>
+          ))}
+          <h4>{movie.description}</h4>
+          <h2>{movie.title}</h2>
+          <h2>{movie.rating}</h2>
         </div>
 
         {movie.reviews !== null && (

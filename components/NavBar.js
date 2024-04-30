@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -15,7 +16,7 @@ export default function NavBar() {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container className="signout-container">
         <Link passHref href="/">
-          <Navbar.Brand>C&apos;est La Movie</Navbar.Brand>
+          <Navbar.Brand><img src="/Logo.png" alt="logo" width="100" height="100" /></Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

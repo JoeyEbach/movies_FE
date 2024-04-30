@@ -36,7 +36,7 @@ function Home() {
   return (
     <>
       {currentUser === null ? (<UserForm onUpdate={onUpdate} />) : (
-        <div className="cards">
+        <div className="general-cards-container">
           {topMovies.map((top) => (
             <MovieCard className="top-rated" key={top.id} movieObj={top} onUpdate={getAllTopMovies} />
           ))}

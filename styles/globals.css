@@ -21,15 +21,14 @@ body {
   background-color: #121212;
 }
 
-.cards {
+/* page containers */
+
+.general-cards-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
-.recent-cards {
-  display: flex;
-  flex-wrap: wrap;
-}
 
 /*movie cards and containers*/
 .card-style {
@@ -107,6 +106,7 @@ body {
 .profile-container{
   color: white;
 }
+
 /*Navbar*/
 .signout-container {
   position: relative;

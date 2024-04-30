@@ -13,7 +13,7 @@ export default function AllMovies() {
     getAllTheMovies();
   }, []);
   return (
-    <div className="cards">
+    <div className="general-cards-container">
       {movies.map((auth) => (
         <MovieCard key={auth.id} movieObj={auth} onUpdate={getAllTheMovies} />
       ))}

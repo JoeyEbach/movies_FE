@@ -22,7 +22,7 @@ export default function Search() {
 
   return (
     <>
-      <div className="card-container">
+      <div className="general-card-container">
         {filteredPosts.map((movie) => <MovieCard key={movie.id} movieObj={movie} />)}
       </div>
     </>
