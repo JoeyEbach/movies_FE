@@ -125,6 +125,39 @@ body {
   object-fit: cover;
   margin: 5px;
 }
+
+.formStars {
+  border: 1px solid black;
+  border-radius: 5px;
+  background: black;
+  margin: 0 auto 0 0;
+  width: 130px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.star {
+  background: none;
+  border: none;
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.goldstar {
+  color: goldenrod;
+}
+
+.graystar {
+  color: darkgray;
+}
+
+.profile-reviews-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
 .profile-container{
   color: white;
 }
