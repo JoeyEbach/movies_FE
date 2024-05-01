@@ -23,12 +23,10 @@ export default function ViewMovie() {
   };
 
   useEffect(() => {
+    setCurrentUser();
     getMovieDetails();
-  }, [movie]);
-
-  useEffect(() => {
-    getSingleUser(user.id).then(setCurrentUser);
-  }, [user]);
+    getSingleUser(user.id);
+  }, [movie, user]);
 
   const handleEdit = () => {
     setReviewing(true);

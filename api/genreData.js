@@ -20,4 +20,21 @@ const getAllGenres = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export default getAllGenres;
+const getMoviesByGenre = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/genres/${id}/movies`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
+export { getAllGenres, getMoviesByGenre };
