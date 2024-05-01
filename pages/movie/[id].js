@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Card, Image } from 'react-bootstrap';
+import { Button, Card, Image } from 'react-bootstrap';
+import Link from 'next/link';
 import { getSingleMovie } from '../../api/movieData';
 import ReviewCard from '../../components/ReviewCard';
 import { deleteReview } from '../../api/reviewData';
@@ -66,6 +67,19 @@ export default function ViewMovie() {
             <h2>{movie.rating}</h2>
           </Card>
         </div>
+
+        <Link href={`/movie/${router.query.id}/recommendations`} passHref>
+          <Button variant="primary">Recommend Similar Movies</Button>
+        </Link>
+
+        {/* <div className="cards">
+          {allMovies
+            .filter((m) => m.id !== movie.id)
+            .sort((a, b) => a.title.localeCompare(b.title))
+            .map((auth) => (
+              <RecCard key={auth.id} movieObj={auth} added="true" manage="true" onUpdate={getAllTheMovies} />
+            ))}
+        </div> */}
 
         {!reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
           <button type="button" onClick={() => setReviewing(true)}>Add A Review</button>

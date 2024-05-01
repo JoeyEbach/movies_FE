@@ -149,3 +149,58 @@ body {
   right: 1px;
   margin-left: auto; 
 }
+
+.rec-card {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  margin: 5px;
+  color: lightgray;
+  button {
+    position: absolute;
+    border-radius: 50%;
+    color: inherit;
+    margin: 5px;
+    width: 40px;
+    height: 40px;
+    background: gray;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 0 5px 0;
+    box-shadow: 1px 1px 3px black;
+  }
+  button:hover {
+    background: darkgray;
+    color: gray;
+    font-size: 24px;
+  }
+  .rec-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+    text-align: center;
+  }
+  p {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    position: absolute;
+    z-index: 4;
+    background: rgba(128, 128, 128, 0.774);
+    text-align: center;
+    border-radius: 5px;
+    padding: 2px 5px;
+    box-shadow: 1px 1px 3px black;
+  }
+  .rec-title {
+    top: 5px;
+    right: 5px;
+    width: 66%;
+  }
+  .rec-users {
+    bottom: -10px;
+    left: 5px;
+    font-size: 10px;
+  }
+}
