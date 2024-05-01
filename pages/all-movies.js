@@ -54,7 +54,7 @@ export default function AllMovies() {
         ) : null}
         <div className="cards">
           {isFiltered ? filteredMovies.map((m) => (
-            <MovieCard key={m.id} movieObj={m} onUpdate={getAllMovies} />
+            <MovieCard key={m.id} movieObj={m} onUpdate={getAllTheMovies} />
           )) : movies.map((auth) => (
             <MovieCard key={auth.id} movieObj={auth} onUpdate={getAllTheMovies} />
           ))}

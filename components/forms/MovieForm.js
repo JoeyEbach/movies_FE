@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import getAllGenres from '../../api/genreData';
+import { getAllGenres } from '../../api/genreData';
 import { createMovie, updateMovie } from '../../api/movieData';
 
 const initialState = {
