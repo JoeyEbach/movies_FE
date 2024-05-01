@@ -36,14 +36,31 @@ export default function MovieForm({ movieObj }) {
     }
   };
 
+  const formatDate = (date) => {
+    const formattedDate = new Date(date).toISOString().split('T')[0];
+    return formattedDate;
+  };
+
   useEffect(() => {
     if (movieObj.id) {
-      setFormInput(movieObj);
+      const currentInfo = {
+        title: movieObj.title,
+        image: movieObj.image,
+        description: movieObj.description,
+        dateReleased: formatDate(movieObj.dateReleased),
+      };
+      setFormInput(currentInfo);
+
+      movieObj.genres.forEach((genre) => {
+        setSelectedGenres((prev) => [...prev, genre.id]);
+      });
     } else {
       setFormInput(initialState);
     }
     getAllGenres()?.then(setGenres);
-  }, []);
+  }, [movieObj]);
+
+  const genreCheck = (gId) => selectedGenres.some((arrVal) => gId === arrVal);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -94,6 +111,7 @@ export default function MovieForm({ movieObj }) {
           type="checkbox"
           label={genre.name}
           name="genreIds"
+          checked={genreCheck(genre.id)}
           onChange={() => {
             const selectedGenre = genre.id;
             if (selectedGenres.includes(selectedGenre)) {
@@ -120,6 +138,10 @@ MovieForm.propTypes = {
     description: PropTypes.string,
     dateReleased: PropTypes.string,
     genreIds: PropTypes.arrayOf(PropTypes.number),
+    genres: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })),
   }),
 };
 

@@ -94,6 +94,17 @@ const updateMovie = (payload, movieId) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const deleteMovie = (movieId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/movies/remove/${movieId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 export {
   getAllMovies,
   getSingleMovie,
@@ -101,4 +112,5 @@ export {
   getRecentMovies,
   createMovie,
   updateMovie,
+  deleteMovie,
 };
