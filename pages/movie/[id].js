@@ -1,11 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Card, Image } from 'react-bootstrap';
-import { getSingleMovie } from '../../api/movieData';
+import { Card, Image, Button } from 'react-bootstrap';
+import Link from 'next/link';
+import { getSingleMovie, deleteMovie } from '../../api/movieData';
 import ReviewCard from '../../components/ReviewCard';
 import { deleteReview } from '../../api/reviewData';
 import { useAuth } from '../../utils/context/authContext';
+import { getSingleUser } from '../../api/userData';
+import ReviewForm from '../../components/forms/ReviewForm';
 
 export default function ViewMovie() {
   const router = useRouter();
@@ -13,6 +16,9 @@ export default function ViewMovie() {
   const { user } = useAuth();
 
   const [movie, setMovie] = useState({});
+  const [reviewing, setReviewing] = useState(false);
+  const [currentUser, setCurrentUser] = useState('');
+  const [admin, setAdmin] = useState(false);
 
   const getMovieDetails = () => {
     getSingleMovie(id)?.then(setMovie);
@@ -22,8 +28,17 @@ export default function ViewMovie() {
     getMovieDetails();
   }, [movie]);
 
-  const handleEdit = (reviewId) => {
-    router.push(`/reviews/edit/${reviewId}`);
+  useEffect(() => {
+    getSingleUser(user.id).then((person) => {
+      setCurrentUser(person);
+      if (person.isAdmin) {
+        setAdmin(true);
+      }
+    });
+  }, [user]);
+
+  const handleEdit = () => {
+    setReviewing(true);
   };
 
   const handleDelete = (reviewId) => {
@@ -35,6 +50,16 @@ export default function ViewMovie() {
     }
   };
 
+  const handleMovieDelete = () => {
+    if (window.confirm(`Are you sure you want to delete ${movie.title}?`)) {
+      deleteMovie(movie.id).then(() => router.push('/all-movies'));
+    }
+  };
+
+  const onUpdate = () => {
+    setReviewing(false);
+  };
+
   return (
     <>
       <div className="card-container">
@@ -43,10 +68,18 @@ export default function ViewMovie() {
             <div className="image-container">
               <Image src={movie.image} alt={movie.title} className="center-image" />
             </div>
+            {admin ? (
+              <>
+                <Link passHref href={(`/movie/edit/${movie.id}`)}>
+                  <Button type="click">Update Movie</Button>
+                </Link>
+                <Button type="click" variant="danger" onClick={handleMovieDelete}>Delete Movie</Button>
+              </>
+            ) : null}
             <h4>{movie.dateReleased}</h4>
             {movie.genres?.map((genre) => (
               <div key={genre.id}>
-                <h4>{movie.name}</h4>
+                <h4>{genre.name}</h4>
               </div>
             ))}
             <h4>{movie.description}</h4>
@@ -55,11 +88,26 @@ export default function ViewMovie() {
           </Card>
         </div>
 
+        {!reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
+          <button type="button" onClick={() => setReviewing(true)}>Add A Review</button>
+        )}
+
+        {reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
+          <ReviewForm user={currentUser.id} onUpdate={onUpdate} />
+        )}
+
+        {reviewing && movie.reviews.filter((rev) => rev.userId === currentUser.id).map((review) => (
+          <ReviewForm key={review.id} reviewObj={review} user={currentUser.id} onUpdate={onUpdate} />
+        ))}
+
         {movie.reviews !== null && (
         <>
           <div className="d-flex flex-wrap reviewCard-container" style={{ width: '100%' }}>
-            {movie.reviews?.map((review) => (
-              <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} userId={user.id} />
+            {!reviewing && movie.reviews?.filter((review) => review.userId === currentUser.id).map((review) => (
+              <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} userId={currentUser.id} />
+            ))}
+            {movie.reviews?.filter((review) => review.userId !== currentUser.id).map((review) => (
+              <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} />
             ))}
           </div>
         </>
