@@ -68,9 +68,49 @@ const getRecentMovies = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const createMovie = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/movies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
+const updateMovie = (payload, movieId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/movies/${movieId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
+const deleteMovie = (movieId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/movies/remove/${movieId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 export {
   getAllMovies,
   getSingleMovie,
   getTopMovies,
   getRecentMovies,
+  createMovie,
+  updateMovie,
+  deleteMovie,
 };
