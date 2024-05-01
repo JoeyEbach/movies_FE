@@ -32,6 +32,17 @@ const getSingleMovie = (movieId) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const deleteMovie = (movieId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/movies/remove/${movieId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    // .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
 const getTopMovies = () => new Promise((resolve, reject) => {
   fetch(`${endpoint}/movies/toprated`, {
     method: 'GET',
@@ -71,6 +82,7 @@ const getRecentMovies = () => new Promise((resolve, reject) => {
 export {
   getAllMovies,
   getSingleMovie,
+  deleteMovie,
   getTopMovies,
   getRecentMovies,
 };
