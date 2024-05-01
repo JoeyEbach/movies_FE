@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Card, Image } from 'react-bootstrap';
-import { getSingleMovie } from '../../api/movieData';
+import { Card, Image, Button } from 'react-bootstrap';
+import Link from 'next/link';
+import { getSingleMovie, deleteMovie } from '../../api/movieData';
 import ReviewCard from '../../components/ReviewCard';
 import { deleteReview } from '../../api/reviewData';
 import { useAuth } from '../../utils/context/authContext';
@@ -17,6 +18,7 @@ export default function ViewMovie() {
   const [movie, setMovie] = useState({});
   const [reviewing, setReviewing] = useState(false);
   const [currentUser, setCurrentUser] = useState('');
+  const [admin, setAdmin] = useState(false);
 
   const getMovieDetails = () => {
     getSingleMovie(id)?.then(setMovie);
@@ -27,7 +29,12 @@ export default function ViewMovie() {
   }, [movie]);
 
   useEffect(() => {
-    getSingleUser(user.id).then(setCurrentUser);
+    getSingleUser(user.id).then((person) => {
+      setCurrentUser(person);
+      if (person.isAdmin) {
+        setAdmin(true);
+      }
+    });
   }, [user]);
 
   const handleEdit = () => {
@@ -43,6 +50,12 @@ export default function ViewMovie() {
     }
   };
 
+  const handleMovieDelete = () => {
+    if (window.confirm(`Are you sure you want to delete ${movie.title}?`)) {
+      deleteMovie(movie.id).then(() => router.push('/all-movies'));
+    }
+  };
+
   const onUpdate = () => {
     setReviewing(false);
   };
@@ -55,10 +68,18 @@ export default function ViewMovie() {
             <div className="image-container">
               <Image src={movie.image} alt={movie.title} className="center-image" />
             </div>
+            {admin ? (
+              <>
+                <Link passHref href={(`/movie/edit/${movie.id}`)}>
+                  <Button type="click">Update Movie</Button>
+                </Link>
+                <Button type="click" variant="danger" onClick={handleMovieDelete}>Delete Movie</Button>
+              </>
+            ) : null}
             <h4>{movie.dateReleased}</h4>
             {movie.genres?.map((genre) => (
               <div key={genre.id}>
-                <h4>{movie.name}</h4>
+                <h4>{genre.name}</h4>
               </div>
             ))}
             <h4>{movie.description}</h4>
