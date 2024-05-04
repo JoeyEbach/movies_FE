@@ -56,10 +56,11 @@ ReviewCard.propTypes = {
   }).isRequired,
   editReview: PropTypes.func,
   deleteReview: PropTypes.func,
-  userId: PropTypes.number.isRequired,
+  userId: PropTypes.number,
 };
 
 ReviewCard.defaultProps = {
   editReview: null,
   deleteReview: null,
+  userId: 0,
 };

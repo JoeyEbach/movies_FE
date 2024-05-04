@@ -34,7 +34,6 @@ export default function Profile() {
     getMyReviews();
     getWatchlist();
   }, [user]);
-  console.warn(myWatchlist);
 
   return (
     <>
