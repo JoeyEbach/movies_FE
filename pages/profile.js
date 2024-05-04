@@ -7,11 +7,18 @@ import { getSingleUser } from '../api/userData';
 import { useAuth } from '../utils/context/authContext';
 import { getReviewsByUser } from '../api/reviewData';
 import ReviewCard from '../components/ReviewCard';
+import MovieCard from '../components/MovieCard';
+import { getWatchlistMovies } from '../api/movieData';
 
 export default function Profile() {
   const [singleUser, setSingleUser] = useState({});
   const [myReviews, setMyReviews] = useState([]);
+  const [myWatchlist, setWatchlist] = useState({});
   const { user } = useAuth();
+
+  const getWatchlist = () => {
+    getWatchlistMovies(user.id).then(setWatchlist);
+  };
 
   const getUserDetails = () => {
     getSingleUser(user.id).then(setSingleUser);
@@ -25,7 +32,9 @@ export default function Profile() {
   useEffect(() => {
     getUserDetails();
     getMyReviews();
+    getWatchlist();
   }, [user]);
+  console.warn(myWatchlist);
 
   return (
     <>
@@ -37,9 +46,20 @@ export default function Profile() {
       <Link href="/profile/all-recommendations" passHref>
         <Button variant="primary">Manage Recommendations</Button>
       </Link>
-      <div>
+      {/* Getting the Watchlist cards */}
+      <div className="myWatchlist">
+        <h2>Your Watchlist:</h2>
+        {myWatchlist.movies?.map((list) => (
+          <div className="cards" key={list.id}>
+            <MovieCard key={list.id} movieObj={list} onUpdate={getWatchlist} />
+          </div>
+        ))}
+      </div>
+      {/* Getting the review cards */}
+      <div className="myReviews">
+        <h2>Your Reviews:</h2>
         {myReviews.map((r) => (
-          <div className="profile-reviews-container">
+          <div className="profile-reviews-container" key={r.id}>
             <div>
               <img src={r.movieImage} alt="movie poster" style={{ width: 80, height: 120 }} />
             </div>

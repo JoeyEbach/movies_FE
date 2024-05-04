@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Card, Image, Button } from 'react-bootstrap';
 import Link from 'next/link';
-import { getSingleMovie, deleteMovie } from '../../api/movieData';
+import { getSingleMovie, deleteMovie, getAllMovies } from '../../api/movieData';
 import ReviewCard from '../../components/ReviewCard';
 import { deleteReview } from '../../api/reviewData';
 import { useAuth } from '../../utils/context/authContext';
@@ -21,6 +21,11 @@ export default function ViewMovie() {
   const [reviewing, setReviewing] = useState(false);
   const [currentUser, setCurrentUser] = useState('');
   const [admin, setAdmin] = useState(false);
+  const [allMovies, setAllMovies] = useState([]);
+
+  const allOfTheMovies = () => {
+    getAllMovies().then(setAllMovies).then(router.push('/all-movies'));
+  };
   const [movieRecs, setMovieRecs] = useState([]);
 
   const countRecs = (recList) => {
@@ -56,7 +61,7 @@ export default function ViewMovie() {
         setAdmin(true);
       }
     });
-  }, [user]);
+  }, [movie, user, allMovies]);
 
   const handleEdit = () => {
     setReviewing(true);
@@ -73,7 +78,7 @@ export default function ViewMovie() {
 
   const handleMovieDelete = () => {
     if (window.confirm(`Are you sure you want to delete ${movie.title}?`)) {
-      deleteMovie(movie.id).then(() => router.push('/all-movies'));
+      deleteMovie(movie.id).then(allOfTheMovies());
     }
   };
 
