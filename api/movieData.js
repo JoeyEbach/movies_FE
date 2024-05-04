@@ -68,6 +68,19 @@ const getRecentMovies = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const createMovie = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/movies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
 const addToWatchlist = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/user/addMovie`, {
     method: 'POST',
@@ -88,8 +101,6 @@ const getWatchlistMovies = (userId) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.json())
-
     .then((response) => response.json())
     .then(resolve)
     .catch(reject);
@@ -140,5 +151,7 @@ export {
   updateMovie,
   addToWatchlist,
   getWatchlistMovies,
-
+  createMovie,
+  updateMovie,
+  deleteMovie,
 };
