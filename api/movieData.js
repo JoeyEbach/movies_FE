@@ -68,6 +68,7 @@ const getRecentMovies = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+
 const addToWatchlist = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/user/addMovie`, {
     method: 'POST',
@@ -89,6 +90,32 @@ const getWatchlistMovies = (userId) => new Promise((resolve, reject) => {
     },
   })
     .then((response) => response.json())
+
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
+const updateMovie = (payload, movieId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/movies/${movieId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
+const deleteMovie = (movieId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/movies/remove/${movieId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
     .then((data) => resolve(data))
     .catch(reject);
 });
@@ -100,4 +127,5 @@ export {
   getRecentMovies,
   addToWatchlist,
   getWatchlistMovies,
+
 };
