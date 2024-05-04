@@ -9,6 +9,8 @@ import { deleteReview } from '../../api/reviewData';
 import { useAuth } from '../../utils/context/authContext';
 import { getSingleUser } from '../../api/userData';
 import ReviewForm from '../../components/forms/ReviewForm';
+import { getRecsByMovie } from '../../api/recData';
+import RecCard from '../../components/RecCard';
 
 export default function ViewMovie() {
   const router = useRouter();
@@ -19,14 +21,33 @@ export default function ViewMovie() {
   const [reviewing, setReviewing] = useState(false);
   const [currentUser, setCurrentUser] = useState('');
   const [admin, setAdmin] = useState(false);
+  const [movieRecs, setMovieRecs] = useState([]);
+
+  const countRecs = (recList) => {
+    const flattenedRecs = [];
+    recList.map((rec) => {
+      if (!flattenedRecs.some((m) => m.id === rec.id)) {
+        flattenedRecs.push({ ...rec, recCount: 1 });
+      } else {
+        const index = flattenedRecs.findIndex((m) => m.id === rec.id);
+        flattenedRecs[index].recCount += 1;
+      }
+      return null;
+    });
+    return flattenedRecs;
+  };
 
   const getMovieDetails = () => {
-    getSingleMovie(id)?.then(setMovie);
+    getSingleMovie(id)
+      ?.then(setMovie)
+      .then(() => getRecsByMovie(id))
+      .then((m) => countRecs(m.recommendedMovies))
+      .then(setMovieRecs);
   };
 
   useEffect(() => {
     getMovieDetails();
-  }, [movie]);
+  }, [reviewing, router]);
 
   useEffect(() => {
     getSingleUser(user.id).then((person) => {
@@ -88,18 +109,20 @@ export default function ViewMovie() {
           </Card>
         </div>
 
-        <Link href={`/movie/${router.query.id}/recommendations`} passHref>
-          <Button variant="primary">Recommend Similar Movies</Button>
-        </Link>
-
-        {/* <div className="cards">
-          {allMovies
-            .filter((m) => m.id !== movie.id)
+        <div className="cards">
+          {movieRecs.length && (<h3>If you enjoyed <i>{movie.title}</i>...</h3>)}
+          {movieRecs
             .sort((a, b) => a.title.localeCompare(b.title))
-            .map((auth) => (
-              <RecCard key={auth.id} movieObj={auth} added="true" manage="true" onUpdate={getAllTheMovies} />
+            .sort((a, b) => b.recCount - a.recCount)
+            .slice(0, 6)
+            .map((m) => (
+              <RecCard key={m.id} movieObj={m} manage={false} recCount={movieRecs.filter((rec) => rec.id === m.id).length} />
             ))}
-        </div> */}
+        </div>
+
+        <Link href={`/movie/${router.query.id}/recommendations`} passHref>
+          <Button variant="primary">Manage Your Recommendations</Button>
+        </Link>
 
         {!reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
           <button type="button" onClick={() => setReviewing(true)}>Add A Review</button>

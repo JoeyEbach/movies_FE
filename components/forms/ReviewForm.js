@@ -37,7 +37,6 @@ export default function ReviewForm({ reviewObj, user, onUpdate }) {
     e.preventDefault();
     if (formData.rating > 0 || formData.commentReview !== '') {
       if (reviewObj.id) {
-        // console.warn({ ...formData, dateCreated: new Date(formData.dateCreated) });
         updateReview({ ...formData, dateCreated: new Date(formData.dateCreated) }).then(onUpdate);
       } else {
         createReview({

@@ -204,3 +204,29 @@ body {
     font-size: 10px;
   }
 }
+
+.recommended-group {
+  border-top: 2px gray solid;
+  padding: 10px 0;
+  display: flex;
+  width: 100%;
+  position: relative;
+  h4 {
+    position: absolute;
+    top: 15px;
+    left: 5px;
+    z-index: 4;
+    width: 390px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background: rgba(128, 128, 128, 0.774);
+    text-align: center;
+    border-radius: 5px;
+    padding: 2px 5px;
+    box-shadow: 1px 1px 3px black;
+    color: lightgray;
+  }
+  .all-recs {
+    display: flex;
+    flex-flow: row wrap;
+  }
+}
