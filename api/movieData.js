@@ -118,17 +118,6 @@ const updateMovie = (payload, movieId) => new Promise((resolve, reject) => {
     .then(resolve)
     .catch(reject);
 });
-const createMovie = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/movies`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  }).then((response) => response.json())
-    .then(resolve)
-    .catch(reject);
-});
 
 const deleteMovie = (movieId) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/movies/remove/${movieId}`, {
@@ -144,14 +133,11 @@ const deleteMovie = (movieId) => new Promise((resolve, reject) => {
 export {
   getAllMovies,
   getSingleMovie,
-  deleteMovie,
   getTopMovies,
   getRecentMovies,
   createMovie,
   updateMovie,
   addToWatchlist,
   getWatchlistMovies,
-  createMovie,
-  updateMovie,
   deleteMovie,
 };
