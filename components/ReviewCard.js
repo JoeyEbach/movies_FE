@@ -5,13 +5,6 @@ import PropTypes from 'prop-types';
 import { Image } from 'react-bootstrap';
 import { getSingleUser } from '../api/userData';
 
-// const initialReview = {
-//   rating: 3,
-//   commentReview: 'It was good.',
-//   dateCreated: '2024-04-25 19:26:56.190649',
-//   authorName: 'User',
-//   authorImage: 'https://s3-eu-west-1.amazonaws.com/blog-ecotree/blog/0001/01/ad46dbb447cd0e9a6aeecd64cc2bd332b0cbcb79.jpeg',
-// };
 export default function ReviewCard({
   reviewObj, editReview, deleteReview, userId,
 }) {
@@ -61,7 +54,13 @@ ReviewCard.propTypes = {
     authorName: PropTypes.string,
     authorImage: PropTypes.string,
   }).isRequired,
-  editReview: PropTypes.func.isRequired,
-  deleteReview: PropTypes.func.isRequired,
-  userId: PropTypes.number.isRequired,
+  editReview: PropTypes.func,
+  deleteReview: PropTypes.func,
+  userId: PropTypes.number,
+};
+
+ReviewCard.defaultProps = {
+  editReview: null,
+  deleteReview: null,
+  userId: 0,
 };
