@@ -2,7 +2,9 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Image } from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { getSingleUser } from '../api/userData';
 
 // const initialReview = {
@@ -32,20 +34,23 @@ export default function ReviewCard({
   return (
     <div className="reviewCard">
       <Image src={author.image} className="userImageReview" alt="User profile" />
-      <div>
+      <div style={{ width: '100%' }}>
         <div className="reviewHead">
-          <p className="reviewUser">{author.name}</p>
-          {reviewObj.rating > 0 && [...Array(reviewObj.rating)].map((e, i) => <p className="star goldstar" key={i}>★</p>)}
-          <p>{reviewObj.dateCreated.split(' ')[0]}</p>
-          {currentUser
-            && (
-            <>
-              <button type="button" className="btn btn-danger" onClick={() => editReview(reviewObj.id)}>Edit</button>
-              <button type="button" className="btn btn-success" onClick={() => deleteReview(reviewObj.id)}>Delete</button>
-            </>
-            )}
+          <div className="stars-header">
+            {reviewObj.rating > 0 && [...Array(reviewObj.rating)].map((e, i) => <p className="star goldstar" key={i}>★</p>)}
+          </div>
+          <p style={{ opacity: '50%' }}>By {author.name} on {reviewObj.dateCreated.split(' ')[0]}</p>
         </div>
         <p>{reviewObj.commentReview}</p>
+        {currentUser
+            && (
+            <>
+              <div className="review-card-btn-container">
+                <Button type="button" className="review-card-btn" variant="dark" onClick={() => editReview(reviewObj.id)}><FontAwesomeIcon icon={faPencil} style={{ color: '#683ce4' }} /></Button>
+                <Button type="button" className="review-card-btn" variant="dark" onClick={() => deleteReview(reviewObj.id)}><FontAwesomeIcon icon={faTrash} style={{ color: '#683ce4' }} /></Button>
+              </div>
+            </>
+            )}
       </div>
     </div>
   );

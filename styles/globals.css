@@ -24,6 +24,9 @@ body {
   color: #ffffff;
 }
 
+h1 {
+  font-family: 'Barlow Condensed' !important;;
+}
 h4 {
   font-family: 'Barlow Condensed' !important;
 }
@@ -42,6 +45,7 @@ h4 {
   background-color: #121212;
   text-align: center;
   color: #ffffff;
+  border-style: none;
 }
 .card-container {
   display: flex;
@@ -55,8 +59,8 @@ h4 {
 .image-container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
-
 .center-image {
   width: 100%; 
   height: auto;
@@ -70,6 +74,12 @@ h4 {
   max-width: 100%; 
   height: auto; 
   border-radius: 15px;
+}
+.card-style img:hover {
+  border-color: #10e5b2;
+  border-width: 3px;
+  border-radius: 15px;
+  border-style: solid;
 }
 
 .card-genres {
@@ -97,19 +107,64 @@ h4 {
 .card-btn {
   background-color: #683ce4;
   border-radius: 25px;
+  width: 100%;
 }
 
-/*Review cards and containers*/
-.reviewCard {
-  width: 90%;
-  background: white;
-  border-radius: 5px;
-  display: flex;
-  .reviewHead {
+/* Movie Details Page */
+
+.details-header-container {
+  margin: 5%;
+  padding: 10px;
+  gap: 15px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  .details-image-container {
     display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .btn-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      .btn {
+        background-color: #121212 !important;
+        border-style: none;
+        border-radius: 50%;
+      }
+    }
   }
 }
 
+
+
+/*Review cards and containers*/
+.reviewCard-details-container {
+  display: flex;
+  direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.reviewCard {
+  width: 90%;
+  background: #31363F;
+  border-radius: 15px;
+  display: flex;
+  padding: 15px;
+  .reviewHead {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.stars-header {
+  display: flex;
+  flex-direction: row;
+}
+.review-card-info-container {
+  display: flex;
+  flex-direction: column;
+}
 .reviewCard-container{
   align-items: center;
   display: flex;
@@ -136,6 +191,16 @@ h4 {
   margin: 5px;
 }
 
+.review-card-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  .review-card-btn {
+    background-color: #31363F;
+    border-style: none;
+  }
+}
+
 .formStars {
   border: 1px solid black;
   border-radius: 5px;
@@ -155,7 +220,7 @@ h4 {
 }
 
 .goldstar {
-  color: goldenrod;
+  color: #10e5b2;
 }
 
 .graystar {
@@ -173,11 +238,35 @@ h4 {
 }
 
 /*Navbar*/
-.signout-container {
-  position: relative;
-}
-.signOutButton {
-  position: absolute;
-  right: 1px;
-  margin-left: auto; 
+
+.navbar {
+  background-color: none;
+
+  .signout-container {
+    position: relative;
+  }
+
+  .signOutButton {
+    position: absolute;
+    right: 1px;
+    margin-left: auto; 
+  }
+  
+  .tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  .search-bar {
+    background-color: #181818 !important;
+    border-style: solid;
+    border-radius: 50px;
+    border-color: #b3b3b3;
+    .form {
+      background-color: #181818 !important;
+      border-style: none;
+      border-radius: 50px;
+      color: #b3b3b3;
+    }
+  }
 }
