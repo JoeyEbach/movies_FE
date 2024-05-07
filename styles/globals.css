@@ -40,6 +40,14 @@ h4 {
   margin-top: 5%;
 }
 
+.sign-in{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10%;
+  gap: 15px;
+}
+
 /*movie cards and containers*/
 .card-style {
   background-color: #121212;

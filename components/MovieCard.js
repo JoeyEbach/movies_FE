@@ -56,11 +56,6 @@ export default function MovieCard({ movieObj, onUpdate }) {
           </Button>
         </div>
         <h4>{movieObj.title.toUpperCase()}</h4>
-        <div className="card-genres">
-          {movieObj.genres?.map((genre) => (
-            <p key={genre.id} className="card-individual-genre">{genre.name}</p>
-          ))}
-        </div>
       </Card.Body>
     </Card>
   );
