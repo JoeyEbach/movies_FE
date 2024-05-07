@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -8,6 +9,7 @@ import { useAuth } from '../utils/context/authContext';
 
 export default function MovieCard({ movieObj, onUpdate }) {
   // const [watchlistMovies, setWatchlistMovies] = useState({});
+
   const { user } = useAuth();
   // const [wishlist, setWishlist] = useState([]);
 
@@ -42,23 +44,23 @@ export default function MovieCard({ movieObj, onUpdate }) {
   // };
 
   return (
-    <Card className="card-style">
-      <Card.Img variant="top" src={movieObj.image} alt={movieObj.title} style={{ height: '400px' }} />
+    <Card className="card-style" style={{ height: '550px' }}>
+      <Link href={`/movie/${movieObj.id}`} passHref>
+        <Card.Img variant="top" src={movieObj.image} alt={movieObj.title} style={{ height: '350px' }} />
+      </Link>
       <Card.Body>
-        <Card.Title>{movieObj.title}</Card.Title>
-        <p className="card-text bold">{movieObj.dateReleased}</p>
-        {movieObj.genres?.map((genre) => (
-          <p key={genre.id} className="card-text bold">{genre.name}</p>
-        ))}
-        <Link href={`/movie/${movieObj.id}`} passHref>
-          <Button variant="primary">VIEW</Button>
-        </Link>
-        <Button variant="info" onClick={addToMyWatchlist}>
-          WATCHLIST
-        </Button>
-        <Button variant="info" onClick={removeFromMyWatchlist}>
-          REMOVE FROM WATCHLIST
-        </Button>
+        <div>
+          <Button className="card-btn" style={{ width: '75%' }} variant="dark" onClick={addToMyWatchlist}>+ WATCHLIST</Button>
+          <Button variant="info" onClick={removeFromMyWatchlist}>
+            REMOVE FROM WATCHLIST
+          </Button>
+        </div>
+        <h4>{movieObj.title.toUpperCase()}</h4>
+        <div className="card-genres">
+          {movieObj.genres?.map((genre) => (
+            <p key={genre.id} className="card-individual-genre">{genre.name}</p>
+          ))}
+        </div>
       </Card.Body>
     </Card>
   );
@@ -69,7 +71,6 @@ MovieCard.propTypes = {
     id: PropTypes.number,
     title: PropTypes.string,
     image: PropTypes.string,
-    dateReleased: PropTypes.string,
     genres: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number,

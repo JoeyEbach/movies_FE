@@ -14,7 +14,7 @@ export default function RecentReleases() {
   }, []);
 
   return (
-    <div className="recent-cards">
+    <div className="general-cards-container">
       {recentMovies.map((rec) => (
         <MovieCard key={rec.id} movieObj={rec} onUpdate={getAllDaRecentMovies} />
       ))}

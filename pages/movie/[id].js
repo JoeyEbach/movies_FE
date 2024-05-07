@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Card, Image, Button } from 'react-bootstrap';
+import { Image, Button } from 'react-bootstrap';
 import Link from 'next/link';
-import { deleteMovie, getSingleMovie } from '../../api/movieData';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { getSingleMovie, deleteMovie } from '../../api/movieData';
 import ReviewCard from '../../components/ReviewCard';
 import { deleteReview } from '../../api/reviewData';
 import { useAuth } from '../../utils/context/authContext';
@@ -88,30 +90,32 @@ export default function ViewMovie() {
 
   return (
     <>
-      <div className="card-container">
-        <div>
-          <Card>
-            <div className="image-container">
-              <Image src={movie.image} alt={movie.title} className="center-image" />
-            </div>
-            {admin ? (
-              <>
-                <Link passHref href={(`/movie/edit/${movie.id}`)}>
-                  <Button type="click">Update Movie</Button>
-                </Link>
-                <Button type="click" variant="danger" onClick={handleMovieDelete}>Delete Movie</Button>
-              </>
-            ) : null}
-            <h4>{movie.dateReleased}</h4>
+      <div>
+        <div className="details-header-container">
+          <div>
+            <h1>{movie.title}</h1>
+            <h3>{movie.dateReleased}</h3>
             {movie.genres?.map((genre) => (
               <div key={genre.id}>
-                <h4>{genre.name}</h4>
+                <p>{genre.name}</p>
               </div>
             ))}
-            <h4>{movie.description}</h4>
-            <h2>{movie.title}</h2>
-            <h2>{movie.rating}</h2>
-          </Card>
+            <p>{movie.description}</p>
+            <h3>{movie.rating}</h3>
+          </div>
+          <div className="details-image-container">
+            <Image src={movie.image} alt={movie.title} className="center-image" />
+            {admin ? (
+              <>
+                <div className="btn-container">
+                  <Link passHref href={(`/movie/edit/${movie.id}`)}>
+                    <Button type="click" variant="dark" className="btn"><FontAwesomeIcon icon={faPencil} style={{ color: '#683ce4' }} /></Button>
+                  </Link>
+                  <Button type="click" variant="dark" onClick={handleMovieDelete} className="btn"><FontAwesomeIcon icon={faTrash} style={{ color: '#683ce4' }} /></Button>
+                </div>
+              </>
+            ) : null}
+          </div>
         </div>
 
         <div className="cards">
@@ -143,7 +147,7 @@ export default function ViewMovie() {
 
         {movie.reviews !== null && (
         <>
-          <div className="d-flex flex-wrap reviewCard-container" style={{ width: '100%' }}>
+          <div className="reviewCard-details-container">
             {!reviewing && movie.reviews?.filter((review) => review.userId === currentUser.id).map((review) => (
               <ReviewCard key={review.id} reviewObj={review} editReview={handleEdit} deleteReview={handleDelete} userId={currentUser.id} />
             ))}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import Link from 'next/link';
 import { getAllMovies } from '../api/movieData';
 import MovieCard from '../components/MovieCard';
@@ -43,7 +43,16 @@ export default function AllMovies() {
     <>
       <div>
         {genres.map((g) => (
-          <Button key={g.id} onClick={() => moviesByGenre(g.id)}>{g.name}</Button>
+          <ButtonGroup>
+            <ToggleButton
+              key={g.id}
+              type="radio"
+              variant="secondary"
+              name="radio"
+              onClick={() => moviesByGenre(g.id)}
+            >{g.name}
+            </ToggleButton>
+          </ButtonGroup>
         ))}
       </div>
       <>
@@ -52,7 +61,7 @@ export default function AllMovies() {
             <Button type="click" variant="primary">Add A Movie</Button>
           </Link>
         ) : null}
-        <div className="cards">
+        <div className="general-cards-container">
           {isFiltered ? filteredMovies.map((m) => (
             <MovieCard key={m.id} movieObj={m} onUpdate={getAllTheMovies} />
           )) : movies.map((auth) => (
