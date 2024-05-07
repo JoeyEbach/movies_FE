@@ -49,7 +49,7 @@ export default function Profile() {
       <div className="myWatchlist">
         <h2>Your Watchlist:</h2>
         {myWatchlist.movies?.map((list) => (
-          <div className="cards" key={list.id}>
+          <div className="general-cards-container" key={list.id}>
             <MovieCard key={list.id} movieObj={list} onUpdate={getWatchlist} />
           </div>
         ))}

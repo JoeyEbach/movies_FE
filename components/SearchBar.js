@@ -18,7 +18,7 @@ export default function SearchBar() {
 
   return (
     <Form className="search-bar" onSubmit={handleSubmit}>
-      <FormControl type="text" id="search" placeholder="Search Movies by Title" onChange={handleChange} value={searchInput} />
+      <FormControl type="text" id="search" placeholder="Search Movies by Title" className="form" onChange={handleChange} value={searchInput} />
     </Form>
   );
 }
