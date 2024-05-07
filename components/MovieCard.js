@@ -6,6 +6,8 @@ import { PropTypes } from 'prop-types';
 import Link from 'next/link';
 
 export default function MovieCard({ movieObj }) {
+  // const [watchlistMovies, setWatchlistMovies] = useState({});
+
   return (
     <Card className="card-style" style={{ height: '550px' }}>
       <Link href={`/movie/${movieObj.id}`} passHref>
