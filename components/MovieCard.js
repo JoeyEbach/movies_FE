@@ -1,47 +1,41 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { PropTypes } from 'prop-types';
 import Link from 'next/link';
-import { addToWatchlist, removeFromWatchlist } from '../api/movieData';
+import { addToWatchlist, removeFromWatchlist, getWatchlistMovies } from '../api/movieData';
 import { useAuth } from '../utils/context/authContext';
 
 export default function MovieCard({ movieObj, onUpdate }) {
-  // const [watchlistMovies, setWatchlistMovies] = useState({});
-
+  const [watchlistMovies, setWatchlistMovies] = useState([]);
+  const [onWatchList, setOnWatchList] = useState(false);
   const { user } = useAuth();
-  // const [wishlist, setWishlist] = useState([]);
 
   const addToMyWatchlist = () => {
     if (window.confirm(`add ${movieObj.title} to watchlist?`)) {
       const payload = { userId: user.id, movieId: movieObj.id };
-      addToWatchlist(payload);
+      addToWatchlist(payload).then(onUpdate);
     }
   };
 
   const removeFromMyWatchlist = () => {
     if (window.confirm(`remove ${movieObj.title} from watchlist?`)) {
-      removeFromWatchlist(user.id, movieObj.id).then(onUpdate);
+      removeFromWatchlist(user.id, movieObj.id);
     }
   };
 
-  // const handleToggleWishlist = () => {
-  //   if (wishlist.includes(movieObj)) {
-  //     // If movie is already in Wishlist, remove it
-  //     setWishlist(wishlist.filter((item) => item !== movieObj));
-  //   } else {
-  //     // If movie is not in Wishlist, add it
-  //     setWishlist([...wishlist, movieObj]);
-  //   }
-  // };
+  const checkWatchlist = () => {
+    getWatchlistMovies(user.id).then((person) => setWatchlistMovies(person.movies));
+    const movieCheck = watchlistMovies.some((movie) => movie.id === movieObj.id);
+    if (movieCheck === true) {
+      setOnWatchList(true);
+    }
+  };
 
-  // const removeFromMyWatchlist = () => {
-  //   if (window.confirm(`add ${movieObj.title} to watchlist?`)) {
-  //     const payload = { userId: user.id, movieId: movieObj.id };
-  //     removeFromWatchlist(payload);
-  //   }
-  // };
+  useEffect(() => {
+    checkWatchlist();
+  }, [watchlistMovies]);
 
   return (
     <Card className="card-style" style={{ height: '550px' }}>
@@ -50,10 +44,11 @@ export default function MovieCard({ movieObj, onUpdate }) {
       </Link>
       <Card.Body>
         <div>
-          <Button className="card-btn" style={{ width: '75%' }} variant="dark" onClick={addToMyWatchlist}>+ WATCHLIST</Button>
-          <Button variant="info" onClick={removeFromMyWatchlist}>
-            REMOVE FROM WATCHLIST
-          </Button>
+          {onWatchList === true ? (
+            <Button className="card-btn" style={{ width: '75%' }} variant="dark" onClick={removeFromMyWatchlist}>- WATCHLIST</Button>
+          ) : (
+            <Button className="card-btn" style={{ width: '75%' }} variant="dark" onClick={addToMyWatchlist}>+ WATCHLIST</Button>
+          )}
         </div>
         <h4>{movieObj.title.toUpperCase()}</h4>
       </Card.Body>
