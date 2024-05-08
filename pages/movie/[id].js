@@ -119,13 +119,13 @@ export default function ViewMovie() {
         </div>
 
         <div className="cards">
-          {movieRecs.length && (<h3>If you enjoyed <i>{movie.title}</i>...</h3>)}
+          {!!movieRecs.length && (<h3>If you enjoyed <i>{movie.title}</i>...</h3>)}
           {movieRecs
             .sort((a, b) => a.title.localeCompare(b.title))
             .sort((a, b) => b.recCount - a.recCount)
             .slice(0, 6)
             .map((m) => (
-              <RecCard key={m.id} movieObj={m} manage={false} recCount={movieRecs.filter((rec) => rec.id === m.id).length} />
+              <RecCard key={m.id} movieObj={m} manage={false} />
             ))}
         </div>
 

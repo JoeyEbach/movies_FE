@@ -25,7 +25,7 @@ body {
 }
 
 h1 {
-  font-family: 'Barlow Condensed' !important;;
+  font-family: 'Barlow Condensed' !important;
 }
 h4 {
   font-family: 'Barlow Condensed' !important;
@@ -133,6 +133,9 @@ h4 {
     display: flex;
     flex-direction: column;
   }
+  p {
+    margin-bottom: 0;
+  }
 }
 .stars-header {
   display: flex;
@@ -151,6 +154,7 @@ h4 {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    margin: 10px 0;
   }
   
   .reviews-container {
@@ -159,7 +163,7 @@ h4 {
     margin: 20px auto;
   }
 
-  /*User page and User profile*/
+
 .userImageReview {
   width: 50px;
   height: 50px;
@@ -177,6 +181,27 @@ h4 {
     border-style: none;
   }
 }
+
+/*User page and User profile*/
+.user-items {
+  display: flex;
+  justify-content: space-between;
+}
+
+.myWatchlist {
+  width: 58%;
+  .watchlist-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 0;
+  }
+}
+
+.myReviews {
+  width: 38%;
+}
+
 
 .formStars {
   border: 1px solid black;
@@ -254,7 +279,7 @@ h4 {
   width: 200px;
   height: 300px;
   margin: 5px;
-  color: lightgray;
+  color: white;
   button {
     position: absolute;
     border-radius: 50%;
@@ -271,9 +296,10 @@ h4 {
     box-shadow: 1px 1px 3px black;
   }
   button:hover {
-    background: darkgray;
-    color: gray;
+    background: #10e5b2;
+    color: black;
     font-size: 24px;
+    box-shadow: 1px 1px 3px #09775d;
   }
   .rec-image {
     width: 100%;
@@ -283,7 +309,7 @@ h4 {
     text-align: center;
   }
   p {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Barlow Condensed';
     position: absolute;
     z-index: 4;
     background: rgba(128, 128, 128, 0.774);
@@ -300,7 +326,23 @@ h4 {
   .rec-users {
     bottom: -10px;
     left: 5px;
-    font-size: 10px;
+    font-size: 12px;
+  }
+}
+
+.all-recs {
+  display: flex;
+  flex-flow: row wrap;
+  padding-bottom: 5px;
+}
+
+.add-to-recs {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
+  margin: 8px 0;
+  .rec-search {
+    display: inline-block;
   }
 }
 
@@ -323,9 +365,5 @@ h4 {
     padding: 2px 5px;
     box-shadow: 1px 1px 3px black;
     color: lightgray;
-  }
-  .all-recs {
-    display: flex;
-    flex-flow: row wrap;
   }
 }
