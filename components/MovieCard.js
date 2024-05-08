@@ -13,7 +13,7 @@ export default function MovieCard({ movieObj, onUpdate }) {
   const { user } = useAuth();
 
   const addToMyWatchlist = () => {
-    if (window.confirm(`add ${movieObj.title} to wishlist?`)) {
+    if (window.confirm(`add ${movieObj.title} to watchlist?`)) {
       const payload = { userId: user.id, movieId: movieObj.id };
       addToWatchlist(payload).then(onUpdate);
     }
