@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, ToggleButton } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { getAllMovies } from '../api/movieData';
 import MovieCard from '../components/MovieCard';
@@ -14,6 +14,7 @@ export default function AllMovies() {
   const [genres, setGenres] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [myStyle, setMyStyle] = useState({});
 
   const getAllTheMovies = () => {
     setIsFiltered(false);
@@ -22,6 +23,7 @@ export default function AllMovies() {
 
   const genresToFilter = () => {
     getAllGenres().then(setGenres);
+    setMyStyle(false);
   };
 
   const moviesByGenre = (id) => {
@@ -29,9 +31,18 @@ export default function AllMovies() {
     setIsFiltered(true);
   };
 
+  const handleClick = (id) => {
+    setMyStyle((prevState) => ({
+      ...myStyle,
+      [id]: !prevState[id],
+    }));
+    moviesByGenre(id);
+  };
+
   useEffect(() => {
     getAllTheMovies();
     genresToFilter();
+    moviesByGenre();
     getSingleUser(user.id).then((person) => {
       if (person.isAdmin) {
         setAdmin(true);
@@ -42,18 +53,24 @@ export default function AllMovies() {
   return (
     <>
       <h1>All Movies</h1>
-      <div>
-        {genres.map((g) => (
-          <ButtonGroup>
-            <ToggleButton
+      <div className="movies-btn-container">
+        <h6>Filter By:</h6>
+        <Button className="notSelected" variant="dark" onClick={() => getAllTheMovies()}>
+          All Movies
+        </Button>
+        {genres.map((g, i) => (
+          <>
+            <Button
               key={g.id}
-              type="radio"
-              variant="secondary"
-              name="radio"
-              onClick={() => moviesByGenre(g.id)}
+              variant="dark"
+              className="notSelected"
+              style={{
+                backgroundColor: myStyle[`${i}`] ? '#10e5b2' : 'initial',
+              }}
+              onClick={handleClick}
             >{g.name}
-            </ToggleButton>
-          </ButtonGroup>
+            </Button>
+          </>
         ))}
       </div>
       <>
