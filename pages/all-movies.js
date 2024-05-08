@@ -42,7 +42,6 @@ export default function AllMovies() {
   useEffect(() => {
     getAllTheMovies();
     genresToFilter();
-    moviesByGenre();
     getSingleUser(user.id).then((person) => {
       if (person.isAdmin) {
         setAdmin(true);
@@ -55,19 +54,20 @@ export default function AllMovies() {
       <h1>All Movies</h1>
       <div className="movies-btn-container">
         <h6>Filter By:</h6>
-        <Button className="notSelected" variant="dark" onClick={() => getAllTheMovies()}>
+        <Button className="notSelected" variant="dark" onClick={(() => getAllTheMovies())}>
           All Movies
         </Button>
-        {genres.map((g, i) => (
+        {genres.map((g) => (
           <>
             <Button
               key={g.id}
               variant="dark"
               className="notSelected"
               style={{
-                backgroundColor: myStyle[`${i}`] ? '#10e5b2' : 'initial',
+                backgroundColor: myStyle[`${g.id}`] ? '#683ce4' : '#121212',
+                color: myStyle[`${g.id}`] ? '#121212' : '#683ce4',
               }}
-              onClick={handleClick}
+              onClick={() => handleClick(g.id)}
             >{g.name}
             </Button>
           </>
