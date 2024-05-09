@@ -30,7 +30,7 @@ function Home() {
   return (
     <>
       <h1>Popula This Week</h1>
-      {!currentUser === null ? (<UserForm onUpdate={onUpdate} />) : (
+      {currentUser === null ? (<UserForm onUpdate={onUpdate} />) : (
         <div className="general-cards-container">
           {topMovies.map((top) => (
             <MovieCard className="top-rated" key={top.id} movieObj={top} onUpdate={getAllTopMovies} />
