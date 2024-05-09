@@ -92,7 +92,7 @@ h4 {
 }
 
 .details-header-container {
-  margin: 40px auto;
+  margin: auto;
   width: 70%;
   padding: 50px;
   gap: 15px;
@@ -124,7 +124,7 @@ h4 {
   grid-template-columns: repeat(3, 1fr); /* Define columns */
   width: 70%;
   gap: 10px;
-  margin: 50px auto;
+  margin: auto;
 }
 .movie-sentence{
   text-align: center;
