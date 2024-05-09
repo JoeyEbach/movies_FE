@@ -14,15 +14,15 @@ export default function MovieCard({ movieObj, onUpdate }) {
   const { user } = useAuth();
 
   const addToMyWatchlist = () => {
-    if (window.confirm(`add ${movieObj.title} to watchlist?`)) {
+    if (window.confirm(`Add ${movieObj.title} to Watchlist?`)) {
       const payload = { userId: user.id, movieId: movieObj.id };
       addToWatchlist(payload).then(onUpdate);
     }
   };
 
   const removeFromMyWatchlist = () => {
-    if (window.confirm(`remove ${movieObj.title} from watchlist?`)) {
-      removeFromWatchlist(user.id, movieObj.id);
+    if (window.confirm(`Remove ${movieObj.title} from Watchlist?`)) {
+      removeFromWatchlist(user.id, movieObj.id).then(onUpdate);
     }
   };
 
@@ -31,11 +31,14 @@ export default function MovieCard({ movieObj, onUpdate }) {
     const movieCheck = watchlistMovies.some((movie) => movie.id === movieObj.id);
     if (movieCheck === true) {
       setOnWatchList(true);
+    } else {
+      setOnWatchList(false);
     }
   };
 
   useEffect(() => {
     checkWatchlist();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchlistMovies]);
 
   return (
@@ -46,7 +49,7 @@ export default function MovieCard({ movieObj, onUpdate }) {
       <Card.Body>
         <div>
           {onWatchList === true ? (
-            <Button className="card-btn" style={{ width: '75%' }} variant="dark" onClick={removeFromMyWatchlist}>- WATCHLIST</Button>
+            <Button className="card-btn on-watchlist" style={{ width: '75%' }} variant="dark" onClick={removeFromMyWatchlist}>- WATCHLIST</Button>
           ) : (
             <Button className="card-btn" style={{ width: '75%' }} variant="dark" onClick={addToMyWatchlist}>+ WATCHLIST</Button>
           )}

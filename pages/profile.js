@@ -41,33 +41,35 @@ export default function Profile() {
         <img src={singleUser.image} alt="profile" style={{ borderRadius: '50%', width: 250, height: 250 }} />
         <h1>Hello {singleUser.name}! </h1>
         <p>Email: {singleUser.email}</p>
+        <Link href="/profile/all-recommendations" passHref>
+          <Button variant="primary">View/Manage Recommendations</Button>
+        </Link>
       </div>
-      <Link href="/profile/all-recommendations" passHref>
-        <Button variant="primary">Manage Recommendations</Button>
-      </Link>
-      {/* Getting the Watchlist cards */}
-      <div className="myWatchlist">
-        <h2>Your Watchlist:</h2>
-        {myWatchlist.movies?.map((list) => (
-          <div className="general-cards-container" key={list.id}>
-            <MovieCard key={list.id} movieObj={list} onUpdate={getWatchlist} />
+      <div className="user-items">
+        {/* Getting the Watchlist cards */}
+        <div className="myWatchlist">
+          <h2>Your Watchlist:</h2>
+          <div className="watchlist-container">
+            {myWatchlist.movies?.map((list) => (
+              <MovieCard key={list.id} movieObj={list} onUpdate={getWatchlist} />
+            ))}
           </div>
-        ))}
-      </div>
-      {/* Getting the review cards */}
-      <div className="myReviews">
-        <h2>Your Reviews:</h2>
-        {myReviews.map((r) => (
-          <div className="profile-reviews-container" key={r.id}>
-            <div>
-              <img src={r.movieImage} alt="movie poster" style={{ width: 80, height: 120 }} />
+        </div>
+        {/* Getting the review cards */}
+        <div className="myReviews">
+          <h2>Your Reviews:</h2>
+          {myReviews.map((r) => (
+            <div className="profile-reviews-container" key={r.id}>
+              <div>
+                <img src={r.movieImage} alt="movie poster" style={{ width: 80, height: 120 }} />
+              </div>
+              <div>
+                <h6>{r.movieName}</h6>
+                <ReviewCard key={r.id} reviewObj={r} />
+              </div>
             </div>
-            <div>
-              <h6>{r.movieName}</h6>
-              <ReviewCard key={r.id} reviewObj={r} />
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </>
   );
