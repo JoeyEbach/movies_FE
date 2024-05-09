@@ -100,11 +100,12 @@ h4 {
 }
 
 .details-header-container {
-  margin: 5%;
-  padding: 10px;
+  margin: auto;
+  width: 70%;
+  padding: 50px;
   gap: 15px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr;
   .details-image-container {
     display: flex;
     justify-content: center;
@@ -124,13 +125,18 @@ h4 {
 
 /*Review cards and containers*/
 .reviewCard-details-container {
-  display: flex;
-  direction: column;
-  justify-content: center;
-  width: 100%;
+ 
+   padding: 10px;
+  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Define columns */
+  width: 70%;
   gap: 10px;
+  margin: auto;
 }
-
+.movie-sentence{
+  text-align: center;
+}
 .reviewCard {
   width: 90%;
   background: #31363F;
@@ -388,4 +394,46 @@ h4 {
     box-shadow: 1px 1px 3px black;
     color: lightgray;
   }
+}
+ /* single movie page */
+.card-genres {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 2px;
+
+  .card-individual-genre {
+    border-style: solid;
+    border-color: #10e5b2;
+    border-width: 2px;
+    border-radius: 25px;
+    color: #10e5b2;
+    width: 75px;
+  }
+}
+#card-btn-single-movie {
+  background-color: #683ce4;
+  border-radius: 25px;
+}
+#review-btn {
+  border-radius: 25px;
+  background-color: rgb(53, 196, 240);
+
+}
+.center-image {
+  width: 400px;
+  display: block;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+.button-container-review {
+  display: flex;
+  justify-content: flex-start;
+ margin-left: 180px;
+  margin-top: 70px;
 }

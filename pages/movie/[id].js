@@ -92,19 +92,20 @@ export default function ViewMovie() {
     <>
       <div>
         <div className="details-header-container">
-          <div>
-            <h1>{movie.title}</h1>
-            <h3>{movie.dateReleased}</h3>
-            {movie.genres?.map((genre) => (
-              <div key={genre.id}>
-                <p>{genre.name}</p>
-              </div>
-            ))}
-            <p>{movie.description}</p>
-            <h3>{movie.rating}</h3>
-          </div>
+
           <div className="details-image-container">
             <Image src={movie.image} alt={movie.title} className="center-image" />
+            <div>
+              <h1>{movie.title}</h1>
+              <h3>{movie.dateReleased}</h3>
+              <div className="card-genres">
+                {movie.genres?.map((genre) => (
+                  <p key={genre.id} className="card-individual-genre">{genre.name}</p>
+                ))}
+              </div>
+              <p>{movie.description}</p>
+              <h3>{movie.rating}</h3>
+            </div>
             {admin ? (
               <>
                 <div className="btn-container">
@@ -117,35 +118,37 @@ export default function ViewMovie() {
             ) : null}
           </div>
         </div>
+      </div>
 
-        <div className="cards">
-          {!!movieRecs.length && (<h3>If you enjoyed <i>{movie.title}</i>...</h3>)}
-          {movieRecs
-            .sort((a, b) => a.title.localeCompare(b.title))
-            .sort((a, b) => b.recCount - a.recCount)
-            .slice(0, 6)
-            .map((m) => (
-              <RecCard key={m.id} movieObj={m} manage={false} />
-            ))}
-        </div>
-
+      {movieRecs.length && (<h3 className="movie-sentence">If you enjoyed <i>{movie.title}</i>...</h3>)}
+      <div className="reviewCard-details-container">
+        {movieRecs
+          .sort((a, b) => a.title.localeCompare(b.title))
+          .sort((a, b) => b.recCount - a.recCount)
+          .slice(0, 6)
+          .map((m) => (
+            <RecCard key={m.id} movieObj={m} manage={false} recCount={movieRecs.filter((rec) => rec.id === m.id).length} />
+          ))}
+      </div>
+      <div className="button-container">
         <Link href={`/movie/${router.query.id}/recommendations`} passHref>
-          <Button variant="primary">Manage Your Recommendations</Button>
+          <Button id="card-btn-single-movie" style={{ width: '25%' }}>Manage Your Recommendations</Button>
         </Link>
-
+      </div>
+      <div className="button-container-review">
         {!reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
-          <button type="button" onClick={() => setReviewing(true)}>Add A Review</button>
+        <button id="review-btn" type="button" onClick={() => setReviewing(true)}>Add A Review</button>
         )}
+      </div>
+      {reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
+      <ReviewForm user={currentUser.id} onUpdate={onUpdate} />
+      )}
 
-        {reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
-          <ReviewForm user={currentUser.id} onUpdate={onUpdate} />
-        )}
+      {reviewing && movie.reviews.filter((rev) => rev.userId === currentUser.id).map((review) => (
+        <ReviewForm key={review.id} reviewObj={review} user={currentUser.id} onUpdate={onUpdate} />
+      ))}
 
-        {reviewing && movie.reviews.filter((rev) => rev.userId === currentUser.id).map((review) => (
-          <ReviewForm key={review.id} reviewObj={review} user={currentUser.id} onUpdate={onUpdate} />
-        ))}
-
-        {movie.reviews !== null && (
+      {movie.reviews !== null && (
         <>
           <div className="reviewCard-details-container">
             {!reviewing && movie.reviews?.filter((review) => review.userId === currentUser.id).map((review) => (
@@ -156,9 +159,7 @@ export default function ViewMovie() {
             ))}
           </div>
         </>
-        )}
-
-      </div>
+      )}
 
     </>
   );

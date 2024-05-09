@@ -147,10 +147,10 @@ export {
   getSingleMovie,
   getTopMovies,
   getRecentMovies,
+  createMovie,
+  updateMovie,
   addToWatchlist,
   getWatchlistMovies,
   removeFromWatchlist,
-  createMovie,
-  updateMovie,
   deleteMovie,
 };

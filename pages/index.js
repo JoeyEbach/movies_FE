@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useAuth } from '../utils/context/authContext';
 import { getSingleUser } from '../api/userData';
 import UserForm from '../components/forms/UserForm';
@@ -10,7 +9,6 @@ function Home() {
   const [currentUser, setCurrentUser] = useState(null);
   const [topMovies, setTopMovies] = useState([]);
   const { user } = useAuth();
-  const router = useRouter();
 
   const getAllTopMovies = () => {
     getTopMovies().then(setTopMovies);
@@ -22,11 +20,11 @@ function Home() {
 
   useEffect(() => {
     getSingleUser(user.id).then(setCurrentUser);
-  }, [user]);
+  }, [user.id]);
 
   const onUpdate = () => {
-    router.reload();
     getSingleUser(user.id).then(setCurrentUser);
+    getAllTopMovies();
   };
 
   return (
