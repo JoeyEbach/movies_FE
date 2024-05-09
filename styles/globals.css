@@ -67,6 +67,14 @@ h4 {
     width: 100%;
   }
 
+  .on-watchlist {
+    background-color: transparent;
+  }
+
+  .on-watchlist:hover {
+    border: 1px solid #10e5b2;
+  }
+
   .card-genres {
     display: flex;
     flex-flow: row wrap;
