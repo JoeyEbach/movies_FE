@@ -245,7 +245,21 @@ h4 {
 
 .profile-container{
   color: white;
-
+  display: flex;
+  flex-flow: row wrap;
+  gap: 30px;
+  align-items: center;
+  padding-bottom: 25px;
+  img { 
+    border: 2px solid #10e5b2;
+  }
+  span {
+    display: flex;
+    align-items: baseline;
+    p {
+      font-style: italic;
+    }
+  }
 }
 
 /*Navbar*/

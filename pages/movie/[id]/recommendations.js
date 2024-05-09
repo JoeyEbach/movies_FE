@@ -45,19 +45,21 @@ export default function Recommendations() {
   return (
     <>
       <h1>Manage Recommendations for <i>{movie.title}</i></h1>
-      {!!userRecs?.recommendedMovies
-        && (
-        <>
-          <hr />
-          <h3>Your Recommendations</h3>
-          <div className="all-recs">
-            {userRecs?.recommendedMovies
-              ?.sort((a, b) => a.title.localeCompare(b.title))
-              .map((m) => (
-                <RecCard key={m.id} movieObj={m} added manage onUpdate={updateRecs} />
-              ))}
-          </div>
-        </>
+      <hr />
+      {userRecs?.recommendedMovies
+        ? (
+          <>
+            <h3>Your Recommendations</h3>
+            <div className="all-recs">
+              {userRecs?.recommendedMovies
+                ?.sort((a, b) => a.title.localeCompare(b.title))
+                .map((m) => (
+                  <RecCard key={m.id} movieObj={m} added manage onUpdate={updateRecs} />
+                ))}
+            </div>
+          </>
+        ) : (
+          <h6><i>Select titles below to add recommendations</i></h6>
         )}
       <hr />
       <div className="add-to-recs">

@@ -38,12 +38,15 @@ export default function Profile() {
   return (
     <>
       <div className="profile-container">
-        <img src={singleUser.image} alt="profile" style={{ borderRadius: '50%', width: 250, height: 250 }} />
-        <h1>Hello {singleUser.name}! </h1>
-        <p>Email: {singleUser.email}</p>
-        <Link href="/profile/all-recommendations" passHref>
-          <Button variant="primary">View/Manage Recommendations</Button>
-        </Link>
+        <div>
+          <img src={singleUser.image} alt="profile" style={{ borderRadius: '50%', width: 150, height: 150 }} />
+        </div>
+        <div>
+          <span><h1>Hello {singleUser.name}! </h1><p>&ensp;{singleUser.email}</p></span>
+          <Link href="/profile/all-recommendations" passHref>
+            <Button variant="primary">View/Manage Recommendations</Button>
+          </Link>
+        </div>
       </div>
       <div className="user-items">
         {/* Getting the Watchlist cards */}
