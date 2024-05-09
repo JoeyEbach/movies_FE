@@ -29,7 +29,7 @@ function Home() {
 
   return (
     <>
-      <h1>Popula This Week</h1>
+      <h1>Popular This Week</h1>
       {currentUser === null ? (<UserForm onUpdate={onUpdate} />) : (
         <div className="general-cards-container">
           {topMovies.map((top) => (
