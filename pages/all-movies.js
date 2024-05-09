@@ -14,16 +14,18 @@ export default function AllMovies() {
   const [genres, setGenres] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
-  const [myStyle, setMyStyle] = useState({});
+  const [activeButton, setActiveButton] = useState(null);
+  const [activeAllButton, setActiveAllButton] = useState(false);
 
   const getAllTheMovies = () => {
     setIsFiltered(false);
+    setActiveButton(null);
+    setActiveAllButton(true);
     getAllMovies().then(setMovies);
   };
 
   const genresToFilter = () => {
     getAllGenres().then(setGenres);
-    setMyStyle(false);
   };
 
   const moviesByGenre = (id) => {
@@ -32,10 +34,8 @@ export default function AllMovies() {
   };
 
   const handleClick = (id) => {
-    setMyStyle((prevState) => ({
-      ...myStyle,
-      [id]: !prevState[id],
-    }));
+    setActiveAllButton(false);
+    setActiveButton(id);
     moviesByGenre(id);
   };
 
@@ -51,10 +51,19 @@ export default function AllMovies() {
 
   return (
     <>
-      <h1>All Movies</h1>
+      <div className="movie-details-header">
+        <h1>All Movies</h1>
+        <div>
+          {admin ? (
+            <Link passHref href="/movie/new">
+              <Button className="details-header-btns" type="click" variant="dark">Add A Movie</Button>
+            </Link>
+          ) : null}
+        </div>
+      </div>
       <div className="movies-btn-container">
         <h6>Filter By:</h6>
-        <Button className="notSelected" variant="dark" onClick={(() => getAllTheMovies())}>
+        <Button className={activeAllButton ? 'selected' : 'notSelected'} variant="dark" onClick={() => getAllTheMovies()}>
           All Movies
         </Button>
         {genres.map((g) => (
@@ -62,32 +71,20 @@ export default function AllMovies() {
             <Button
               key={g.id}
               variant="dark"
-              className="notSelected"
-              style={{
-                backgroundColor: myStyle[`${g.id}`] ? '#683ce4' : '#121212',
-                color: myStyle[`${g.id}`] ? '#121212' : '#683ce4',
-              }}
+              className={activeButton === g.id ? 'selected' : 'notSelected'}
               onClick={() => handleClick(g.id)}
             >{g.name}
             </Button>
           </>
         ))}
       </div>
-      <>
-        {admin ? (
-          <Link passHref href="/movie/new">
-            <Button type="click" variant="primary">Add A Movie</Button>
-          </Link>
-        ) : null}
-        <div className="general-cards-container">
-          {isFiltered ? filteredMovies.map((m) => (
-            <MovieCard key={m.id} movieObj={m} onUpdate={getAllTheMovies} />
-          )) : movies.map((auth) => (
-            <MovieCard key={auth.id} movieObj={auth} onUpdate={getAllTheMovies} />
-          ))}
-        </div>
-      </>
-
+      <div className="general-cards-container">
+        {isFiltered ? filteredMovies.map((m) => (
+          <MovieCard key={m.id} movieObj={m} onUpdate={getAllTheMovies} />
+        )) : movies.map((auth) => (
+          <MovieCard key={auth.id} movieObj={auth} onUpdate={getAllTheMovies} />
+        ))}
+      </div>
     </>
   );
 }

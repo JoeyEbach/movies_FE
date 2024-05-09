@@ -42,7 +42,7 @@ export default function Profile() {
         <h1>Hello {singleUser.name}! </h1>
         <p>Email: {singleUser.email}</p>
         <Link href="/profile/all-recommendations" passHref>
-          <Button variant="primary">View/Manage Recommendations</Button>
+          <Button variant="dark" className="profile-recommendations-btn">View/Manage Recommendations</Button>
         </Link>
       </div>
       <div className="user-items">
@@ -66,6 +66,7 @@ export default function Profile() {
               <div>
                 <h6>{r.movieName}</h6>
                 <ReviewCard key={r.id} reviewObj={r} />
+                <div style={{ height: '10px' }} />
               </div>
             </div>
           ))}

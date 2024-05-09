@@ -16,7 +16,7 @@ export default function NavBar() {
     <Navbar collapseOnSelect expand="lg" className="navbar">
       <Container className="signout-container">
         <Link passHref href="/">
-          <Navbar.Brand><img src="/Logo.png" alt="logo" width="100" height="100" /></Navbar.Brand>
+          <Navbar.Brand><img src="/Logo.png" alt="logo" width="125" height="125" /></Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -40,7 +40,7 @@ export default function NavBar() {
               <SearchBar />
             </div>
             <Nav style={{ width: '25%' }}>
-              <Button variant="outline-secondary" onClick={signOut} className="signOutButton">
+              <Button variant="dark" onClick={signOut} className="signOutButton">
                 Sign Out
               </Button>
             </Nav>
