@@ -23,7 +23,7 @@ export default function Search() {
   return (
     <>
       <div className="general-cards-container">
-        {filteredPosts.map((movie) => <MovieCard key={movie.id} movieObj={movie} />)}
+        {filteredPosts.length === 0 ? (<h1>No Results Found</h1>) : (filteredPosts.map((movie) => <MovieCard key={movie.id} movieObj={movie} />))}
       </div>
     </>
   );

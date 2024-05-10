@@ -40,7 +40,7 @@ h4 {
   font-family: 'Barlow Condensed' !important;
 
   .signin-container {
-    align-items: flex-end;
+    align-items: flex-start;
 
     .signin-btn {
       color: #121212;
@@ -284,16 +284,6 @@ h4 {
 
 .profile-container{
   color: white;
-<<<<<<< HEAD
-  font-family:'Barlow Condensed' !important;
-  padding-bottom: 25px;
-
-  .profile-recommendations-btn {
-    background-color: #683ce4;
-    border-color: #683ce4;
-    color: #121212;
-    border-radius: 25px;;
-=======
   display: flex;
   flex-flow: row wrap;
   gap: 25px;
@@ -312,7 +302,6 @@ h4 {
       font-style: italic;
       color: lightgray;
     }
->>>>>>> main
   }
 }
 
@@ -482,16 +471,16 @@ h4 {
 .card-genres {
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 2px;
 
   .card-individual-genre {
     border-style: solid;
     border-color: #10e5b2;
-    border-width: 2px;
     border-radius: 25px;
+    border-width: 2px;
+    padding: 10px;
     color: #10e5b2;
-    width: 75px;
   }
 }
 

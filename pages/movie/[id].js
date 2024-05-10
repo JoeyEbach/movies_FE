@@ -30,6 +30,9 @@ export default function ViewMovie() {
   //   getAllMovies().then(setAllMovies).then(router.push('/all-movies'));
   // };
 
+  const releaseDate = new Date(movie.dateReleased);
+  const year = releaseDate.getFullYear();
+
   const countRecs = (recList) => {
     const flattenedRecs = [];
     recList.map((rec) => {
@@ -94,14 +97,13 @@ export default function ViewMovie() {
         <div className="details-header-container">
           <div>
             <h1>{movie.title}</h1>
-            <h3>{movie.dateReleased}</h3>
+            <h3>{year}</h3>
+            <p>{movie.description}</p>
             <div className="card-genres">
               {movie.genres?.map((genre) => (
                 <p key={genre.id} className="card-individual-genre">{genre.name}</p>
               ))}
             </div>
-            <p>{movie.description}</p>
-            <h3>{movie.rating}</h3>
           </div>
           <div>
             <Image src={movie.image} alt={movie.title} className="center-image" />
@@ -119,7 +121,7 @@ export default function ViewMovie() {
         </div>
       </div>
 
-      {movieRecs.length && (<h3 className="movie-sentence">If you enjoyed <i>{movie.title}</i>...</h3>)}
+      {!!movieRecs.length && (<h3 className="movie-sentence">If you enjoyed <i>{movie.title}</i>...</h3>)}
       <div className="reviewCard-details-container">
         {movieRecs
           .sort((a, b) => a.title.localeCompare(b.title))
