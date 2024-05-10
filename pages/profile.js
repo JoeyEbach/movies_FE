@@ -42,7 +42,7 @@ export default function Profile() {
         <h1>Hello {singleUser.name}! </h1>
         <p>Email: {singleUser.email}</p>
         <Link href="/profile/all-recommendations" passHref>
-          <Button variant="dark" className="profile-recommendations-btn">View/Manage Recommendations</Button>
+          <Button variant="dark">View/Manage Recommendations</Button>
         </Link>
       </div>
       <div className="user-items">

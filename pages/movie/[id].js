@@ -92,20 +92,19 @@ export default function ViewMovie() {
     <>
       <div>
         <div className="details-header-container">
-
-          <div className="details-image-container">
-            <Image src={movie.image} alt={movie.title} className="center-image" />
-            <div>
-              <h1>{movie.title}</h1>
-              <h3>{movie.dateReleased}</h3>
-              <div className="card-genres">
-                {movie.genres?.map((genre) => (
-                  <p key={genre.id} className="card-individual-genre">{genre.name}</p>
-                ))}
-              </div>
-              <p>{movie.description}</p>
-              <h3>{movie.rating}</h3>
+          <div>
+            <h1>{movie.title}</h1>
+            <h3>{movie.dateReleased}</h3>
+            <div className="card-genres">
+              {movie.genres?.map((genre) => (
+                <p key={genre.id} className="card-individual-genre">{genre.name}</p>
+              ))}
             </div>
+            <p>{movie.description}</p>
+            <h3>{movie.rating}</h3>
+          </div>
+          <div>
+            <Image src={movie.image} alt={movie.title} className="center-image" />
             {admin ? (
               <>
                 <div className="btn-container">
@@ -137,7 +136,7 @@ export default function ViewMovie() {
       </div>
       <div className="button-container-review">
         {!reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (
-        <button id="review-btn" type="button" onClick={() => setReviewing(true)}>Add A Review</button>
+        <Button id="review-btn" variant="dark" onClick={() => setReviewing(true)}>Add A Review</Button>
         )}
       </div>
       {reviewing && !movie.reviews?.filter((rev) => rev.userId === currentUser.id).length && (

@@ -97,23 +97,6 @@ h4 {
   .on-watchlist:hover {
     border: 1px solid #10e5b2;
   }
-
-  .card-genres {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    gap: 2px;
-
-    .card-individual-genre {
-      border-style: solid;
-      border-color: #10e5b2;
-      border-width: 2px;
-      border-radius: 25px;
-      color: #10e5b2;
-      width: 75px;
-    }
-
-  }
 }
 /* All Movies Page*/ 
 
@@ -171,36 +154,6 @@ h4 {
 
 .selected:hover {
   border-color: #10e5b2;
-}
-
-/* Movie Details Page */
-.center-image {
-  width: 100%; 
-  height: auto;
-}
-
-.details-header-container {
-  margin: auto;
-  width: 70%;
-  padding: 50px;
-  gap: 15px;
-  display: grid;
-  grid-template-rows: 1fr;
-  .details-image-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    .btn-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      .btn {
-        background-color: #121212 !important;
-        border-style: none;
-        border-radius: 50%;
-      }
-    }
-  }
 }
 
 /*Review cards and containers*/
@@ -457,6 +410,35 @@ h4 {
   }
 }
  /* single movie page */
+
+.details-header-container {
+  margin: auto;
+  width: 70%;
+  padding: 50px;
+  gap: 15px;
+  display: flex;
+  flex-direction: row;
+
+  .center-image {
+    width: 200px;
+    display: block;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    .btn {
+      background-color: #121212 !important;
+      border-style: none;
+      border-radius: 50%;
+    }  
+  }
+}
+
 .card-genres {
   display: flex;
   flex-flow: row wrap;
@@ -472,14 +454,19 @@ h4 {
     width: 75px;
   }
 }
+
 #card-btn-single-movie {
   background-color: #683ce4;
   border-radius: 25px;
+  border-color: #683ce4;
+  color: #121212;
 }
 #review-btn {
   border-radius: 25px;
-  background-color: rgb(53, 196, 240);
-
+  width: 150px;
+  background-color: #10e5b2;
+  border-color: #10e5b2;
+  color: #121212;
 }
 .center-image {
   width: 400px;
@@ -495,6 +482,6 @@ h4 {
 .button-container-review {
   display: flex;
   justify-content: flex-start;
- margin-left: 180px;
+  margin-left: 180px;
   margin-top: 70px;
 }
