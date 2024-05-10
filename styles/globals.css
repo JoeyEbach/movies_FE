@@ -31,6 +31,29 @@ h4 {
   font-family: 'Barlow Condensed' !important;
 }
 
+/* Sign In */
+.sign-in {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10%;
+  font-family: 'Barlow Condensed' !important;
+
+  .signin-container {
+    align-items: flex-start;
+
+    .signin-btn {
+      color: #121212;
+      background-color: #10e5b2;
+      border-radius: 25px;
+      border-color: #10e5b2;
+      width: 100%;
+    }
+  }
+  
+}
+
+
 /* page containers */
 
 .general-cards-container {
@@ -74,53 +97,63 @@ h4 {
   .on-watchlist:hover {
     border: 1px solid #10e5b2;
   }
+}
+/* All Movies Page*/ 
 
-  .card-genres {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    gap: 2px;
+.movie-details-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 15px;
 
-    .card-individual-genre {
-      border-style: solid;
-      border-color: #10e5b2;
-      border-width: 2px;
-      border-radius: 25px;
-      color: #10e5b2;
-      width: 75px;
-    }
+  h1 {
+    width: 75%;
+  }
 
+  .details-header-btns {
+    color: #121212;
+    background-color: #10e5b2;
+    border-color: #10e5b2;
+    border-style: solid;
+    border-radius: 25px;
+    font-family: 'Barlow Condensed' !important;
+    width: 10%;
+  }
+}
+.movies-btn-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  justify-content: center;
+
+  h6 {
+    font-family: 'Barlow Condensed' !important;
   }
 }
 
-/* Movie Details Page */
-.center-image {
-  width: 100%; 
-  height: auto;
+.selected {
+  border-style: solid;
+  border-color: #683ce4;
+  color: #121212;
+  background-color: #683ce4;
+  font-family: 'Barlow Condensed' !important;
 }
 
-.details-header-container {
-  margin: auto;
-  width: 70%;
-  padding: 50px;
-  gap: 15px;
-  display: grid;
-  grid-template-rows: 1fr;
-  .details-image-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    .btn-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      .btn {
-        background-color: #121212 !important;
-        border-style: none;
-        border-radius: 50%;
-      }
-    }
-  }
+.notSelected {
+  border-style: solid;
+  border-color: #683ce4;
+  border-width: 2px;
+  color: #683ce4;
+  background-color: #121212;
+  font-family: 'Barlow Condensed' !important;
+}
+
+.notSelected:hover {
+  border-color: #10e5b2;
+}
+
+.selected:hover {
+  border-color: #10e5b2;
 }
 
 /*Review cards and containers*/
@@ -285,6 +318,12 @@ h4 {
     position: absolute;
     right: 1px;
     margin-left: auto; 
+    border-color: #10e5b2;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 25px;
+    color: #10e5b2;
+    font-family:'Barlow Condensed' !important;
   }
   
   .tabs {
@@ -293,12 +332,12 @@ h4 {
     justify-content: space-evenly;
   }
   .search-bar {
-    background-color: #181818 !important;
+    background-color: #121212 !important;
     border-style: solid;
     border-radius: 50px;
     border-color: #b3b3b3;
     .form {
-      background-color: #181818 !important;
+      background-color: #121212  !important;
       border-style: none;
       border-radius: 50px;
       color: #b3b3b3;
@@ -400,29 +439,63 @@ h4 {
   }
 }
  /* single movie page */
+
+.details-header-container {
+  margin: auto;
+  width: 70%;
+  padding: 50px;
+  gap: 15px;
+  display: flex;
+  flex-direction: row;
+
+  .center-image {
+    width: 200px;
+    display: block;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    .btn {
+      background-color: #121212 !important;
+      border-style: none;
+      border-radius: 50%;
+    }  
+  }
+}
+
 .card-genres {
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 2px;
 
   .card-individual-genre {
     border-style: solid;
     border-color: #10e5b2;
-    border-width: 2px;
     border-radius: 25px;
+    border-width: 2px;
+    padding: 10px;
     color: #10e5b2;
-    width: 75px;
   }
 }
+
 #card-btn-single-movie {
   background-color: #683ce4;
   border-radius: 25px;
+  border-color: #683ce4;
+  color: #121212;
 }
 #review-btn {
   border-radius: 25px;
-  background-color: rgb(53, 196, 240);
-
+  width: 150px;
+  background-color: #10e5b2;
+  border-color: #10e5b2;
+  color: #121212;
 }
 .center-image {
   width: 400px;
@@ -438,6 +511,6 @@ h4 {
 .button-container-review {
   display: flex;
   justify-content: flex-start;
- margin-left: 180px;
+  margin-left: 180px;
   margin-top: 70px;
 }

@@ -9,11 +9,13 @@ const searchMoviesByTitle = (searchValue) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
   })
+    // eslint-disable-next-line consistent-return
     .then((response) => {
       if (!response.ok) {
-        throw new Error('Failed to fetch search results');
+        resolve([]);
+      } else {
+        return response.json();
       }
-      return response.json();
     })
     .then((data) => resolve(data))
     .catch(reject);

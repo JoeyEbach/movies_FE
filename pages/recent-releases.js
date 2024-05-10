@@ -14,10 +14,13 @@ export default function RecentReleases() {
   }, []);
 
   return (
-    <div className="general-cards-container">
-      {recentMovies.map((rec) => (
-        <MovieCard key={rec.id} movieObj={rec} onUpdate={getAllDaRecentMovies} />
-      ))}
-    </div>
+    <>
+      <h1>Recent Releases</h1>
+      <div className="general-cards-container">
+        {recentMovies.map((rec) => (
+          <MovieCard key={rec.id} movieObj={rec} onUpdate={getAllDaRecentMovies} />
+        ))}
+      </div>
+    </>
   );
 }

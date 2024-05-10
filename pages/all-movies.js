@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, ToggleButton } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { getAllMovies } from '../api/movieData';
 import MovieCard from '../components/MovieCard';
@@ -14,9 +14,13 @@ export default function AllMovies() {
   const [genres, setGenres] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [activeButton, setActiveButton] = useState(null);
+  const [activeAllButton, setActiveAllButton] = useState(false);
 
   const getAllTheMovies = () => {
     setIsFiltered(false);
+    setActiveButton(null);
+    setActiveAllButton(true);
     getAllMovies().then(setMovies);
   };
 
@@ -27,6 +31,12 @@ export default function AllMovies() {
   const moviesByGenre = (id) => {
     getMoviesByGenre(id).then(setFilteredMovies);
     setIsFiltered(true);
+  };
+
+  const handleClick = (id) => {
+    setActiveAllButton(false);
+    setActiveButton(id);
+    moviesByGenre(id);
   };
 
   useEffect(() => {
@@ -41,35 +51,40 @@ export default function AllMovies() {
 
   return (
     <>
-      <div>
+      <div className="movie-details-header">
+        <h1>All Movies</h1>
+        <div>
+          {admin ? (
+            <Link passHref href="/movie/new">
+              <Button className="details-header-btns" type="click" variant="dark">Add A Movie</Button>
+            </Link>
+          ) : null}
+        </div>
+      </div>
+      <div className="movies-btn-container">
+        <h6>Filter By:</h6>
+        <Button className={activeAllButton ? 'selected' : 'notSelected'} variant="dark" onClick={() => getAllTheMovies()}>
+          All Movies
+        </Button>
         {genres.map((g) => (
-          <ButtonGroup>
-            <ToggleButton
+          <>
+            <Button
               key={g.id}
-              type="radio"
-              variant="secondary"
-              name="radio"
-              onClick={() => moviesByGenre(g.id)}
+              variant="dark"
+              className={activeButton === g.id ? 'selected' : 'notSelected'}
+              onClick={() => handleClick(g.id)}
             >{g.name}
-            </ToggleButton>
-          </ButtonGroup>
+            </Button>
+          </>
         ))}
       </div>
-      <>
-        {admin ? (
-          <Link passHref href="/movie/new">
-            <Button type="click" variant="primary">Add A Movie</Button>
-          </Link>
-        ) : null}
-        <div className="general-cards-container">
-          {isFiltered ? filteredMovies.map((m) => (
-            <MovieCard key={m.id} movieObj={m} onUpdate={getAllTheMovies} />
-          )) : movies.map((auth) => (
-            <MovieCard key={auth.id} movieObj={auth} onUpdate={getAllTheMovies} />
-          ))}
-        </div>
-      </>
-
+      <div className="general-cards-container">
+        {isFiltered ? filteredMovies.map((m) => (
+          <MovieCard key={m.id} movieObj={m} onUpdate={getAllTheMovies} />
+        )) : movies.map((auth) => (
+          <MovieCard key={auth.id} movieObj={auth} onUpdate={getAllTheMovies} />
+        ))}
+      </div>
     </>
   );
 }
