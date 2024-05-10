@@ -45,19 +45,30 @@ export default function Recommendations() {
   return (
     <>
       <h1>Manage Recommendations for <i>{movie.title}</i></h1>
-      <h3>Your Recommendations</h3>
-      <div className="cards">
-        {userRecs?.recommendedMovies
-          ?.sort((a, b) => a.title.localeCompare(b.title))
-          .map((m) => (
-            <RecCard key={m.id} movieObj={m} added manage onUpdate={updateRecs} />
-          ))}
+      <hr />
+      {userRecs?.recommendedMovies
+        ? (
+          <>
+            <h3>Your Recommendations</h3>
+            <div className="all-recs">
+              {userRecs?.recommendedMovies
+                ?.sort((a, b) => a.title.localeCompare(b.title))
+                .map((m) => (
+                  <RecCard key={m.id} movieObj={m} added manage onUpdate={updateRecs} />
+                ))}
+            </div>
+          </>
+        ) : (
+          <h6><i>Select titles below to add recommendations</i></h6>
+        )}
+      <hr />
+      <div className="add-to-recs">
+        <h3>Add</h3>
+        <Form className="search-bar rec-search" onSubmit={(e) => e.preventDefault()}>
+          <FormControl type="text" id="search" placeholder="Search by Title..." onChange={handleChange} value={searchInput} />
+        </Form>
       </div>
-      <h3>Add</h3>
-      <Form className="search-bar" onSubmit={(e) => e.preventDefault()}>
-        <FormControl type="text" id="search" placeholder="Filter by Title..." onChange={handleChange} value={searchInput} />
-      </Form>
-      <div className="cards">
+      <div className="all-recs">
         {allMovies
           .filter((m) => m.title.toLowerCase().includes(searchInput))
           .filter((m) => m.id !== movie.id)
