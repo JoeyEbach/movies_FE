@@ -33,7 +33,7 @@ export default function AllRecommendations() {
               </Link>
             </div>
             <div className="all-recs">
-              {single.recommendedMovies.map((rec) => <RecCard key={rec.movieId} movieObj={rec} singleMovieId={single.singleMovie.id} added manage onUpdate={updateRecs} />)};
+              {single.recommendedMovies.map((rec) => <RecCard key={rec.movieId} movieObj={rec} singleMovieId={single.singleMovie.id} added manage onUpdate={updateRecs} />)}
             </div>
           </div>
         ))}

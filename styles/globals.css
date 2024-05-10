@@ -253,17 +253,21 @@ h4 {
   color: white;
   display: flex;
   flex-flow: row wrap;
-  gap: 30px;
+  gap: 25px;
   align-items: center;
-  padding-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #683ce4;
+  margin-bottom: 15px;
   img { 
-    border: 2px solid #10e5b2;
+    border: 3px solid #683ce4;
   }
   span {
     display: flex;
     align-items: baseline;
+    margin-left: 5px;
     p {
       font-style: italic;
+      color: lightgray;
     }
   }
 }
@@ -375,7 +379,7 @@ h4 {
 }
 
 .recommended-group {
-  border-top: 2px gray solid;
+  border-top: 2px #683ce4 solid;
   padding: 10px 0;
   display: flex;
   width: 100%;
@@ -392,7 +396,7 @@ h4 {
     border-radius: 5px;
     padding: 2px 5px;
     box-shadow: 1px 1px 3px black;
-    color: lightgray;
+    color: white;
   }
 }
  /* single movie page */
